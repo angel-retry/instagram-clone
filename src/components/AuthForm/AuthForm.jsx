@@ -3,6 +3,16 @@ import { useState } from 'react'
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true)
+  const [inputs, setInputs] = useState({
+    email: '',
+    password: '',
+    confirmPassword: ''
+  })
+
+  const handleAuth = () => {
+    console.log('inputs', inputs)
+  }
+
   return (
     <>
       <Box border={'1px solid gray'} borderRadius={4} padding={5}>
@@ -12,11 +22,15 @@ const AuthForm = () => {
             placeholder='Email'
             fontSize={14}
             type='email'
+            val={inputs.email}
+            onChange={(e) => setInputs({ ...inputs, email: e.target.value })}
           />
           <Input
             placeholder='Password'
             fontSize={14}
             type='password'
+            val={inputs.password}
+            onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
           />
           {
             !isLogin
@@ -25,12 +39,14 @@ const AuthForm = () => {
                     placeholder='Confirm Password'
                     fontSize={14}
                     type='password'
+                    val={inputs.confirmPassword}
+                    onChange={(e) => setInputs({ ...inputs, confirmPassword: e.target.value })}
                   />
                 )
               : null
           }
 
-          <Button w={'full'} colorScheme='blue' size={'sm'} fontSize={14}>
+          <Button w={'full'} colorScheme='blue' size={'sm'} fontSize={14} onClick={handleAuth}>
             {isLogin ? 'Login' : 'Sign Up'}
           </Button>
 
