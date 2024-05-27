@@ -4,11 +4,12 @@ import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 import App from './App.jsx'
 import './index.css'
 import { mode } from '@chakra-ui/theme-tools'
+import { BrowserRouter } from 'react-router-dom'
 
 const styles = {
   global: (props) => ({
     body: {
-      bg: mode('grey.100', '#000')(props), // props.colorMode === "dark" ? darkMode : lightMode
+      bg: mode('grey.100', '#000')(props), // props.colorMode === "light" ? 'grey.100': '#000'
       color: mode('grey.800', 'whiteAlpha.900')(props)
     }
   })
@@ -19,12 +20,14 @@ const config = {
   useSystemColorMode: false
 }
 
-const theme = extendTheme({ config })
+const theme = extendTheme({ config, styles })
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <ChakraProvider theme={theme}>
-      <App />
-    </ChakraProvider>
+    <BrowserRouter>
+      <ChakraProvider theme={theme}>
+        <App />
+      </ChakraProvider>
+    </BrowserRouter>
   </React.StrictMode>
 )

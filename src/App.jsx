@@ -1,10 +1,16 @@
-import { Button } from '@chakra-ui/react'
+import { Route, Routes } from 'react-router-dom'
+import HomePage from './pages/HomePage/HomePage'
+import AuthPage from './pages/AuthPage/AuthPage'
 
 const App = () => {
   return (
-    <div>
-      <Button>Hello world</Button>
-    </div>
+    <>
+    <Routes>
+      <Route path='/' element={<HomePage/>}/>
+      <Route path='/auth' element={<AuthPage/>}/>
+
+    </Routes>
+    </>
   )
 }
 
