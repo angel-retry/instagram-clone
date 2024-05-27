@@ -1,6 +1,10 @@
+import { Button } from '@chakra-ui/react'
+
 const App = () => {
   return (
-    <div>App</div>
+    <div>
+      <Button>Hello world</Button>
+    </div>
   )
 }
 
