@@ -33,7 +33,7 @@ const ProfilePost = ({ img }) => {
         zIndex={1}
         justifyContent={'center'}
       >
-        <Flex alignItems={'center'} justifyContent={'center'} gap={50}>
+        <Flex alignItems={'center'} justifyContent={'center'} gap={{ base: 4, lg: 50 }}>
           <Flex alignItems={'center'}>
             <AiFillHeart size={20} />
             <Text fontWeight={'bold'} ml={2}>
@@ -55,28 +55,28 @@ const ProfilePost = ({ img }) => {
 
       </GridItem>
 
-      <Modal isOpen={isOpen} onClose={onClose} isCentered={true} size={{ base: '3xl', md: '5xl' }}>
+      <Modal isOpen={isOpen} onClose={onClose} isCentered={true} size={{ base: '3xl', md: '5xl' }} >
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent >
           <ModalCloseButton />
-          <ModalBody bg={'black'} pb={5}>
-            <Flex gap={4} w={{ base: '90%', sm: '70%', md: 'full' }} mx={'auto'}>
-              <Box
+          <ModalBody bg={'black'} pb={5} >
+            <Flex gap={4} w={{ base: '90%', sm: '70%', md: 'full' }} mx={'auto'} >
+              <Flex
                 borderRadius={4}
                 overflow={'hidden'}
                 flex={1.5}
-                alignSelf={'center'}
+                alignItems={'center'}
+                justifyContent={'center'}
               >
-                <Image src={img} alt='profile post' />
-              </Box>
+                <Image src={img} alt='profile post' maxH={'500px'}/>
+              </Flex>
 
               <Flex flex={1} flexDir={'column'} px={10} display={{ base: 'none', md: 'flex' }}>
                 <Flex justifyContent={'space-between'} alignItems={'center'}>
                   <Flex alignItems={'center'} gap={4}>
                     <Avatar src='/profilepic.png' name="as a programmer" size={'sm'} />
-
                     <Text fontWeight={'bold'} fontSize={12}>
-                      asaprogrammer_
+                    asaprogrammer_
                     </Text>
                   </Flex>
 
@@ -85,9 +85,16 @@ const ProfilePost = ({ img }) => {
                   </Box>
                 </Flex>
 
+                <Text fontWeight={'medium'} fontSize={12} mx={1} my={2}>
+                  feeling good ...
+                </Text>
+
                 <Divider my={4} bg={'gray.500'} />
 
                 <VStack w={'full'} alignItems={'start'} maxH={'350px'} overflowY={'auto'}>
+                  <Comment createdAt='1d ago' username='asaprogrammer' profilePic='/profilepic.png' text='Dummy images from unsplash' />
+                  <Comment createdAt='1d ago' username='asaprogrammer' profilePic='/profilepic.png' text='Dummy images from unsplash' />
+                  <Comment createdAt='1d ago' username='asaprogrammer' profilePic='/profilepic.png' text='Dummy images from unsplash' />
                   <Comment createdAt='1d ago' username='asaprogrammer' profilePic='/profilepic.png' text='Dummy images from unsplash' />
                   <Comment createdAt='1d ago' username='asaprogrammer' profilePic='/profilepic.png' text='Dummy images from unsplash' />
                   <Comment createdAt='1d ago' username='asaprogrammer' profilePic='/profilepic.png' text='Dummy images from unsplash' />
