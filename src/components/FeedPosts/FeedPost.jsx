@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/react'
+import { Box, Image } from '@chakra-ui/react'
 import PostHeader from './PostHeader'
 import PostFooter from './PostFooter'
 
@@ -6,7 +6,9 @@ const FeedPost = () => {
   return (
     <>
       <PostHeader />
-      <Box></Box>
+      <Box>
+        <Image src='/img1.png' alt='image' />
+      </Box>
       <PostFooter />
     </>
   )
