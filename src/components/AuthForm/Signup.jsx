@@ -40,24 +40,6 @@ const Signup = () => {
         onChange={(e) => setInputs({ ...inputs, fullName: e.target.value })}
       />
 
-      <Input
-        placeholder='Password'
-        fontSize={14}
-        type='password'
-        val={inputs.password}
-        size={'sm'}
-        onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
-      />
-
-      <Input
-        placeholder='Confirm Password'
-        fontSize={14}
-        type='password'
-        val={inputs.confirmPassword}
-        size={'sm'}
-        onChange={(e) => setInputs({ ...inputs, confirmPassword: e.target.value })}
-      />
-
       <InputGroup>
         <Input
           placeholder='Password'
@@ -74,6 +56,15 @@ const Signup = () => {
           </Button>
         </InputRightElement>
       </InputGroup>
+
+      <Input
+        placeholder='Confirm Password'
+        fontSize={14}
+        type='password'
+        val={inputs.confirmPassword}
+        size={'sm'}
+        onChange={(e) => setInputs({ ...inputs, confirmPassword: e.target.value })}
+      />
 
       <Button w={'full'} colorScheme='blue' size={'sm'} fontSize={14} >
         Sign Up
