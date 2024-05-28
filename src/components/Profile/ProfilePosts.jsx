@@ -15,14 +15,14 @@ const ProfilePosts = () => {
         sm: 'repeat(1, 1fr)',
         md: 'repeat(3, 1fr)'
       }}
-      gap={1}
-      columnGap={1}
+      gap={3}
+      columnGap={3}
     >
       {
         isLoading
           ? (
               Array.from({ length: 5 }, (_, index) => (
-                <VStack key={index} alignItems={'flex-start'} gap={4}>
+                <VStack key={index} alignItems={'flex-start'}>
                   <Skeleton w={'full'} aspectRatio={1 / 1}>
                     <Box>content wrapped</Box>
                   </Skeleton>
