@@ -1,5 +1,6 @@
 import { Box, Grid, Skeleton, VStack } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
+import ProfilePost from './ProfilePost'
 
 const ProfilePosts = () => {
   const [isLoading, setIsLoading] = useState(true)
@@ -18,15 +19,24 @@ const ProfilePosts = () => {
       columnGap={1}
     >
       {
-        isLoading && (
-          Array.from({ length: 5 }, (_, index) => (
-            <VStack key={index} alignItems={'flex-start'} gap={4}>
-              <Skeleton w={'full'}>
-                <Box h='300px'>content wrapped</Box>
-              </Skeleton>
-            </VStack>
-          ))
-        )
+        isLoading
+          ? (
+              Array.from({ length: 5 }, (_, index) => (
+                <VStack key={index} alignItems={'flex-start'} gap={4}>
+                  <Skeleton w={'full'}>
+                    <Box h='300px'>content wrapped</Box>
+                  </Skeleton>
+                </VStack>
+              ))
+            )
+          : (
+              <>
+                <ProfilePost img='/img1.png' />
+                <ProfilePost img='/img2.png' />
+                <ProfilePost img='/img3.png' />
+                <ProfilePost img='/img4.png' />
+              </>
+            )
       }
 
     </Grid>
