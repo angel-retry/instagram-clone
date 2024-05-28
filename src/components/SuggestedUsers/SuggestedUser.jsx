@@ -1,6 +1,9 @@
-import { Avatar, Box, Flex, VStack } from '@chakra-ui/react'
+import { Avatar, Box, Button, Flex, VStack } from '@chakra-ui/react'
+import { useState } from 'react'
 
 const SuggestedUser = ({ name, followers, avatar }) => {
+  const [isFollowed, setIsFollowed] = useState(false)
+
   return (
     <Flex justifyContent={'space-between'} alignItems={'center'} w={'full'}>
       <Flex alignItems={'center'} gap={4}>
@@ -15,6 +18,19 @@ const SuggestedUser = ({ name, followers, avatar }) => {
           </Box>
         </VStack>
       </Flex>
+
+      <Button
+        fontSize={13}
+        bg={'transparent'}
+        p={0}
+        h={'max-content'}
+        fontWeight={'medium'}
+        color={'blue.400'}
+        _hover={{ color: 'white' }}
+        onClick={() => setIsFollowed(!isFollowed)}
+      >
+        {isFollowed ? 'unfollow' : 'follow'}
+      </Button>
     </Flex>
   )
 }
