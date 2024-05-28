@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Divider, Flex, GridItem, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, Text, useDisclosure, VStack } from '@chakra-ui/react'
+import { Avatar, Box, Divider, Flex, GridItem, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, Text, useDisclosure, VStack } from '@chakra-ui/react'
 import { AiFillHeart } from 'react-icons/ai'
 import { FaComment } from 'react-icons/fa'
 import { MdDelete } from 'react-icons/md'
@@ -64,9 +64,8 @@ const ProfilePost = ({ img }) => {
               <Box
                 borderRadius={4}
                 overflow={'hidden'}
-                border={'1px solid'}
-                borderColor={'whiteAlpha.300'}
                 flex={1.5}
+                alignSelf={'center'}
               >
                 <Image src={img} alt='profile post' />
               </Box>
@@ -96,7 +95,6 @@ const ProfilePost = ({ img }) => {
                   <Comment createdAt='1d ago' username='asaprogrammer' profilePic='/profilepic.png' text='Dummy images from unsplash' />
                   <Comment createdAt='1d ago' username='asaprogrammer' profilePic='/profilepic.png' text='Dummy images from unsplash' />
                   <Comment createdAt='1d ago' username='asaprogrammer' profilePic='/profilepic.png' text='Dummy images from unsplash' />
-
                 </VStack>
 
                 <Divider bg={'gray.800'} mt={'auto'} />
