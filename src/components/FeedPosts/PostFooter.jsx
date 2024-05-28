@@ -2,7 +2,7 @@ import { Box, Button, Flex, Input, InputGroup, InputRightElement, Text } from '@
 import { useState } from 'react'
 import { CommentLogo, NotificationsLogo, UnlikeLogo } from '../../assets/constants'
 
-const PostFooter = ({ username }) => {
+const PostFooter = ({ username, isProfilePage }) => {
   const [liked, setLiked] = useState(false)
   const [likes, setLikes] = useState(1000)
 
@@ -31,16 +31,21 @@ const PostFooter = ({ username }) => {
         {likes} likes
       </Text>
 
-      <Text fontSize={'sm'} fontWeight={700}>
-        {username}{' '}
-        <Text as={'span'} fontWeight={400}>
-          Feeling good...
-        </Text>
-      </Text>
+      {!isProfilePage &&
+      (
+        <>
+          <Text fontSize={'sm'} fontWeight={700}>
+            {username}{' '}
+            <Text as={'span'} fontWeight={400}>
+              Feeling good...
+            </Text>
+          </Text>
 
-      <Text fontSize={'sm'} color={'gray'}>
-        View all 1,000 comments
-      </Text>
+          <Text fontSize={'sm'} color={'gray'}>
+            View all 1,000 comments
+          </Text>
+        </>
+      )}
 
       <Flex alignItems={'center'} justifyContent={'space-between'} gap={2} w={'full'}>
         <InputGroup>

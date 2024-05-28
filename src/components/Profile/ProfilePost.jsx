@@ -3,6 +3,7 @@ import { AiFillHeart } from 'react-icons/ai'
 import { FaComment } from 'react-icons/fa'
 import { MdDelete } from 'react-icons/md'
 import Comment from '../Comment/Comment'
+import PostFooter from '../FeedPosts/PostFooter'
 
 const ProfilePost = ({ img }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -92,6 +93,11 @@ const ProfilePost = ({ img }) => {
                   <Comment createdAt='1d ago' username='asaprogrammer' profilePic='/profilepic.png' text='Dummy images from unsplash' />
                   <Comment createdAt='1d ago' username='asaprogrammer' profilePic='/profilepic.png' text='Dummy images from unsplash' />
                 </VStack>
+
+                <Divider bg={'gray.800'} mt={'auto'} />
+
+                <PostFooter isProfilePage={true}/>
+
               </Flex>
             </Flex>
           </ModalBody>
