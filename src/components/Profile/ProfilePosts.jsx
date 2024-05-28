@@ -23,8 +23,8 @@ const ProfilePosts = () => {
           ? (
               Array.from({ length: 5 }, (_, index) => (
                 <VStack key={index} alignItems={'flex-start'} gap={4}>
-                  <Skeleton w={'full'}>
-                    <Box h='300px'>content wrapped</Box>
+                  <Skeleton w={'full'} aspectRatio={1 / 1}>
+                    <Box>content wrapped</Box>
                   </Skeleton>
                 </VStack>
               ))
