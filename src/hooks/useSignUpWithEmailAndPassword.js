@@ -8,7 +8,7 @@ const useSignUpWithEmailAndPassword = () => {
 
   const [
     createUserWithEmailAndPassword,
-    user,
+    ,
     loading,
     error
   ] = useCreateUserWithEmailAndPassword(auth)
@@ -22,7 +22,7 @@ const useSignUpWithEmailAndPassword = () => {
       const newUser = await createUserWithEmailAndPassword(inputs.email, inputs.password)
 
       if (!newUser && error) {
-        showToast('Error', error, 'error')
+        showToast('Error', error.message, 'error')
         return
       }
 
