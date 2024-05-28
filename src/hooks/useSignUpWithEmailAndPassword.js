@@ -2,9 +2,12 @@ import { doc, setDoc } from 'firebase/firestore'
 import { auth, firestore } from '../firebase/firebase'
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth'
 import useShowToast from './useShowToast'
+import useAuthStore from '../store/authStore'
 
 const useSignUpWithEmailAndPassword = () => {
   const showToast = useShowToast()
+
+  const loginUser = useAuthStore(state => state.login)
 
   const [
     createUserWithEmailAndPassword,
@@ -43,6 +46,8 @@ const useSignUpWithEmailAndPassword = () => {
         await setDoc(doc(firestore, 'users', newUser.user.uid), userDoc)
 
         localStorage.setItem('user-info', JSON.stringify(userDoc))
+
+        loginUser(userDoc)
       }
     } catch (error) {
       console.error(error)
