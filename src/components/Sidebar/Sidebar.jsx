@@ -90,9 +90,8 @@ const Sidebar = () => {
           openDelay={500}
           display={{ base: 'block', md: 'none' }}
         >
-          <Link
-            display={'flex'}
-            to={'/auth'}
+          <Flex
+            onClick={handleLogout}
             as={RouteLink}
             alignItems={'center'}
             gap={4}
@@ -106,7 +105,7 @@ const Sidebar = () => {
             <Box display={{ base: 'none', md: 'block' }}>
               Logout
             </Box>
-          </Link>
+          </Flex>
         </Tooltip>
       </Flex>
     </Box>
