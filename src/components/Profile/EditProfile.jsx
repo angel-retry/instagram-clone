@@ -19,6 +19,8 @@ import {
 import { useRef, useState } from 'react'
 import useAuthStore from '../../store/authStore'
 import usePreviewImg from '../../hooks/usePreviewImg'
+import useEditProfile from '../../hooks/useEditProfile'
+import useShowToast from '../../hooks/useShowToast'
 
 const EditProfile = ({ isOpen, onClose }) => {
   const [inputs, setInputs] = useState({
@@ -27,16 +29,24 @@ const EditProfile = ({ isOpen, onClose }) => {
     bio: ''
   })
 
+  const showToast = useShowToast()
+
   const authUser = useAuthStore(state => state.user)
 
   const fileRef = useRef(null)
 
   const { selectedFile, handleImageChange, setSelectedFile } = usePreviewImg()
 
-  console.log(selectedFile)
+  const { isUpdating, editProfile } = useEditProfile()
 
-  const handleEditProfile = () => {
-    console.log(inputs)
+  const handleEditProfile = async () => {
+    try {
+      await editProfile(inputs, selectedFile)
+      setSelectedFile(null) // 清空目前所選的檔案
+      onClose() // 關掉modal
+    } catch (error) {
+      showToast('Error', error.message, 'error')
+    }
   }
 
   return (
@@ -127,6 +137,7 @@ const EditProfile = ({ isOpen, onClose }) => {
                     bg: 'blue.500'
                   }}
                   onClick={handleEditProfile}
+                  isLoading={isUpdating}
                 >
                   Submit
                 </Button>
