@@ -23,11 +23,12 @@ const usePreviewImg = () => {
       // 為FileReader實例，可以讀取file資料
       const reader = new FileReader()
 
-      // 設定事件處理，設定onloadend意思是指為讀取操作結束時，不管成功或失敗都會觸發
+      // 設定事件處理(回調函式)，設定onloadend意思是指為讀取操作結束時，不管成功或失敗都會觸發裡面的函式
       reader.onloadend = () => {
-        setSelectedFile(reader.result)
+        setSelectedFile(reader.result) // reader.result就是URL資料
       }
 
+      // 將檔案轉換為64biteURL資料，會觸發onloadend事件處理器
       reader.readAsDataURL(file)
     } else {
       showToast('Error', 'Please select an image file', 'error')
