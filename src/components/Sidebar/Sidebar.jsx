@@ -4,8 +4,11 @@ import { CreatePostLogo, InstagramLogo, InstagramMobileLogo, NotificationsLogo, 
 import { AiFillHome } from 'react-icons/ai'
 import { BiLogOut } from 'react-icons/bi'
 import useLogout from '../../hooks/useLogout'
+import useAuthStore from '../../store/authStore'
 
 const Sidebar = () => {
+  const AuthUser = useAuthStore(state => state.user)
+
   const sidebarItems = [
     {
       icon: <AiFillHome size={25} />,
@@ -25,9 +28,9 @@ const Sidebar = () => {
       text: 'Create'
     },
     {
-      icon: <Avatar size={'sm'} name="Dan Abrahmov" src="/profilepic.png" />,
+      icon: <Avatar size={'sm'} name={AuthUser.username} src={AuthUser.profilePicURL} />,
       text: 'Profile',
-      link: '/asaprogrammer'
+      link: `/${AuthUser.username}`
     }
   ]
 
@@ -95,7 +98,6 @@ const Sidebar = () => {
         >
           <Flex
             onClick={handleLogout}
-            as={RouteLink}
             alignItems={'center'}
             gap={4}
             _hover={{ bg: 'whiteAlpha.400' }}
