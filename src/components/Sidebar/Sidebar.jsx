@@ -7,7 +7,10 @@ import useLogout from '../../hooks/useLogout'
 import useAuthStore from '../../store/authStore'
 
 const Sidebar = () => {
-  const AuthUser = useAuthStore(state => state.user)
+  const { handleLogout, isLoggingOut } = useLogout()
+  const authUser = useAuthStore(state => state.user)
+
+  if (!authUser) return null
 
   const sidebarItems = [
     {
@@ -28,13 +31,11 @@ const Sidebar = () => {
       text: 'Create'
     },
     {
-      icon: <Avatar size={'sm'} name={AuthUser.username} src={AuthUser.profilePicURL} />,
+      icon: <Avatar size={'sm'} name={authUser.username} src={authUser.profilePicURL} />,
       text: 'Profile',
-      link: `/${AuthUser.username}`
+      link: `/${authUser.username}`
     }
   ]
-
-  const { handleLogout, isLoggingOut } = useLogout()
 
   return (
     <Box
