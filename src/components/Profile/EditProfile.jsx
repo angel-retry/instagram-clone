@@ -16,8 +16,15 @@ import {
   ModalHeader,
   Textarea
 } from '@chakra-ui/react'
+import { useState } from 'react'
 
 const EditProfile = ({ isOpen, onClose }) => {
+  const [inputs, setInputs] = useState({
+    fullName: '',
+    username: '',
+    bio: ''
+  })
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -55,6 +62,8 @@ const EditProfile = ({ isOpen, onClose }) => {
                   placeholder="Full Name"
                   size={'sm'}
                   type="text"
+                  value={inputs.fullName}
+                  onChange={e => setInputs({ ...inputs, fullName: e.target.value })}
                 />
               </FormControl>
 
@@ -64,6 +73,8 @@ const EditProfile = ({ isOpen, onClose }) => {
                   placeholder="Username"
                   size={'sm'}
                   type="email"
+                  value={inputs.username}
+                  onChange={e => setInputs({ ...inputs, username: e.target.value })}
                 />
               </FormControl>
 
@@ -74,6 +85,8 @@ const EditProfile = ({ isOpen, onClose }) => {
                   size={'sm'}
                   type="password"
                   cols={3}
+                  value={inputs.bio}
+                  onChange={e => setInputs({ ...inputs, bio: e.target.value })}
                 />
               </FormControl>
 
@@ -85,7 +98,8 @@ const EditProfile = ({ isOpen, onClose }) => {
                   size={'sm'}
                   _hover={{
                     bg: 'red.500'
-                  }}>
+                  }}
+                  >
                   Cancel
                 </Button>
                 <Button
