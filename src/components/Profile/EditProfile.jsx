@@ -17,6 +17,7 @@ import {
   Textarea
 } from '@chakra-ui/react'
 import { useState } from 'react'
+import useAuthStore from '../../store/authStore'
 
 const EditProfile = ({ isOpen, onClose }) => {
   const [inputs, setInputs] = useState({
@@ -24,6 +25,12 @@ const EditProfile = ({ isOpen, onClose }) => {
     username: '',
     bio: ''
   })
+
+  const authUser = useAuthStore(state => state.user)
+
+  const handleEditProfile = () => {
+    console.log(inputs)
+  }
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -48,7 +55,7 @@ const EditProfile = ({ isOpen, onClose }) => {
               <FormControl>
                 <Stack direction={['column', 'row']} spacing={6}>
                   <Center>
-                    <Avatar size="xl" src={'/img1.png'} border={'2px solid white'}/>
+                    <Avatar size="xl" src={authUser.profilePicURL} border={'2px solid white'}/>
                   </Center>
                   <Center w="full">
                     <Button w="full">Edit Profile Picture</Button>
@@ -62,7 +69,7 @@ const EditProfile = ({ isOpen, onClose }) => {
                   placeholder="Full Name"
                   size={'sm'}
                   type="text"
-                  value={inputs.fullName}
+                  value={inputs.fullName || authUser.fullName }
                   onChange={e => setInputs({ ...inputs, fullName: e.target.value })}
                 />
               </FormControl>
@@ -73,7 +80,7 @@ const EditProfile = ({ isOpen, onClose }) => {
                   placeholder="Username"
                   size={'sm'}
                   type="email"
-                  value={inputs.username}
+                  value={inputs.username || authUser.username }
                   onChange={e => setInputs({ ...inputs, username: e.target.value })}
                 />
               </FormControl>
@@ -85,7 +92,7 @@ const EditProfile = ({ isOpen, onClose }) => {
                   size={'sm'}
                   type="password"
                   cols={3}
-                  value={inputs.bio}
+                  value={inputs.bio || authUser.bio }
                   onChange={e => setInputs({ ...inputs, bio: e.target.value })}
                 />
               </FormControl>
@@ -99,7 +106,8 @@ const EditProfile = ({ isOpen, onClose }) => {
                   _hover={{
                     bg: 'red.500'
                   }}
-                  >
+                  onClick={onClose}
+                >
                   Cancel
                 </Button>
                 <Button
@@ -109,7 +117,9 @@ const EditProfile = ({ isOpen, onClose }) => {
                   size={'sm'}
                   _hover={{
                     bg: 'blue.500'
-                  }}>
+                  }}
+                  onClick={handleEditProfile}
+                >
                   Submit
                 </Button>
               </Stack>
