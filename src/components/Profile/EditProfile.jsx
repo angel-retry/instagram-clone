@@ -33,6 +33,8 @@ const EditProfile = ({ isOpen, onClose }) => {
 
   const { selectedFile, handleImageChange, setSelectedFile } = usePreviewImg()
 
+  console.log(selectedFile)
+
   const handleEditProfile = () => {
     console.log(inputs)
   }
