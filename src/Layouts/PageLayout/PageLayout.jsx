@@ -7,7 +7,7 @@ import Navbar from '../../components/Navbar/Navbar'
 
 const PageLayout = ({ children }) => {
   const { pathname } = useLocation()
-  const [user, loading, error] = useAuthState(auth)
+  const [user, loading] = useAuthState(auth)
   const canRenderSidebar = pathname !== '/auth' && user
   const canRenderNavbar = !user && !loading && pathname !== '/auth'
   const checkingUserIsAuth = !user && loading
