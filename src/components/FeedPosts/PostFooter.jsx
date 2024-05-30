@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Input, InputGroup, InputRightElement, Text } from '@chakra-ui/react'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { CommentLogo, NotificationsLogo, UnlikeLogo } from '../../assets/constants'
 import usePostComment from '../../hooks/usePostComment'
 import useShowToast from '../../hooks/useShowToast'
@@ -12,6 +12,7 @@ const PostFooter = ({ post, username, isProfilePage }) => {
   const [comment, setComment] = useState('')
   const showToast = useShowToast()
   const authUser = useAuthStore(state => state.user)
+  const commentRef = useRef(null)
 
   const handleLike = () => {
     if (liked) {
@@ -39,7 +40,7 @@ const PostFooter = ({ post, username, isProfilePage }) => {
         <Box onClick={handleLike} cursor={'pointer'} fontSize={18}>
           {!liked ? (<NotificationsLogo/>) : (<UnlikeLogo/>)}
         </Box>
-        <Box cursor={'pointer'} fontSize={18}>
+        <Box cursor={'pointer'} fontSize={18} onClick={() => commentRef.current.focus()}>
           <CommentLogo/>
         </Box>
       </Flex>
@@ -67,9 +68,9 @@ const PostFooter = ({ post, username, isProfilePage }) => {
       {authUser && (
         <Flex alignItems={'center'} justifyContent={'space-between'} gap={2} w={'full'}>
         <InputGroup>
-          <Input variant={'flushed'} placeholder={'Add a comment...'} fontSize={14} value={comment} onChange={e => setComment(e.target.value)}/>
+          <Input variant={'flushed'} placeholder={'Add a comment...'} fontSize={14} value={comment} onChange={e => setComment(e.target.value)} ref={commentRef} />
           <InputRightElement>
-            <Button fontSize={14} color={'blue.500'} fontWeight={600} cursor={'pointer'} _hover={{ color: 'white' }} bg={'transparent'} onClick={handleSubmitComment} isLoading={isCommenting}>Post</Button>
+            <Button fontSize={14} color={'blue.500'} fontWeight={600} cursor={'pointer'} _hover={{ color: 'white' }} bg={'transparent'} onClick={handleSubmitComment} isLoading={isCommenting} >Post</Button>
           </InputRightElement>
         </InputGroup>
       </Flex>
