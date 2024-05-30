@@ -4,9 +4,9 @@ import { doc, getDoc } from 'firebase/firestore'
 import { firestore } from '../firebase/firebase'
 
 const useGetUserProfileById = (userId) => {
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const showToast = useShowToast()
-  const [useProfile, setUserProfile] = useState(null)
+  const [userProfile, setUserProfile] = useState(null)
 
   useEffect(() => {
     const getUserProfile = async () => {
@@ -27,7 +27,7 @@ const useGetUserProfileById = (userId) => {
     getUserProfile()
   }, [showToast, setUserProfile, userId])
 
-  return { isLoading, useProfile, setUserProfile }
+  return { isLoading, userProfile, setUserProfile }
 }
 
 export default useGetUserProfileById
