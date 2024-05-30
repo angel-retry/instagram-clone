@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { CommentLogo, NotificationsLogo, UnlikeLogo } from '../../assets/constants'
 import usePostComment from '../../hooks/usePostComment'
 import useShowToast from '../../hooks/useShowToast'
+import useAuthStore from '../../store/authStore'
 
 const PostFooter = ({ post, username, isProfilePage }) => {
   const [liked, setLiked] = useState(false)
@@ -10,6 +11,7 @@ const PostFooter = ({ post, username, isProfilePage }) => {
   const { isCommenting, handlePostComment } = usePostComment()
   const [comment, setComment] = useState('')
   const showToast = useShowToast()
+  const authUser = useAuthStore(state => state.user)
 
   const handleLike = () => {
     if (liked) {
@@ -62,7 +64,8 @@ const PostFooter = ({ post, username, isProfilePage }) => {
         </>
       )}
 
-      <Flex alignItems={'center'} justifyContent={'space-between'} gap={2} w={'full'}>
+      {authUser && (
+        <Flex alignItems={'center'} justifyContent={'space-between'} gap={2} w={'full'}>
         <InputGroup>
           <Input variant={'flushed'} placeholder={'Add a comment...'} fontSize={14} value={comment} onChange={e => setComment(e.target.value)}/>
           <InputRightElement>
@@ -70,6 +73,8 @@ const PostFooter = ({ post, username, isProfilePage }) => {
           </InputRightElement>
         </InputGroup>
       </Flex>
+      )}
+
     </Box>
   )
 }
