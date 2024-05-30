@@ -4,7 +4,6 @@ import useShowToast from './useShowToast'
 import useUserProfileStore from '../store/userProfileStore'
 import { collection, getDocs, orderBy, query, where } from 'firebase/firestore'
 import { firestore } from '../firebase/firebase'
-import useAuthStore from '../store/authStore'
 
 const useGetUserPosts = () => {
   const [isLoading, setIsLoading] = useState(true)
