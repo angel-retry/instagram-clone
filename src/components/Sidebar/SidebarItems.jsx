@@ -1,3 +1,4 @@
+import CreatePost from './CreatePost'
 import Home from './Home'
 import Notifications from './Notifications'
 
@@ -7,6 +8,7 @@ const SidebarItems = () => {
       <Home />
       {/* Search */}
       <Notifications />
+      <CreatePost />
     </>
   )
 }
