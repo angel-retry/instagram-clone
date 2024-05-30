@@ -4,9 +4,11 @@ import { FaComment } from 'react-icons/fa'
 import { MdDelete } from 'react-icons/md'
 import Comment from '../Comment/Comment'
 import PostFooter from '../FeedPosts/PostFooter'
+import useUserProfileStore from '../../store/userProfileStore'
 
-const ProfilePost = ({ img }) => {
+const ProfilePost = ({ post }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const { userProfile } = useUserProfileStore()
 
   return (
     <>
@@ -37,21 +39,21 @@ const ProfilePost = ({ img }) => {
           <Flex alignItems={'center'}>
             <AiFillHeart size={20} />
             <Text fontWeight={'bold'} ml={2}>
-              12
+              {post.likes.length}
             </Text>
           </Flex>
 
           <Flex alignItems={'center'}>
             <FaComment size={20} />
             <Text fontWeight={'bold'} ml={2}>
-              12
+              {post.comments.length}
             </Text>
           </Flex>
         </Flex>
 
       </Flex>
 
-      <Image src={img} alt='profile post' w={'full'} h={'full'} objectFit={'cover'} objectPosition={'center'} />
+      <Image src={post.imageURL} alt='profile post' w={'full'} h={'full'} objectFit={'cover'} objectPosition={'center'} />
 
       </GridItem>
 
@@ -68,15 +70,15 @@ const ProfilePost = ({ img }) => {
                 alignItems={'center'}
                 justifyContent={'center'}
               >
-                <Image src={img} alt='profile post' maxH={'500px'}/>
+                <Image src={post.imageURL} alt='profile post' maxH={'500px'}/>
               </Flex>
 
               <Flex flex={1} flexDir={'column'} px={10} display={{ base: 'none', md: 'flex' }}>
                 <Flex justifyContent={'space-between'} alignItems={'center'}>
                   <Flex alignItems={'center'} gap={4}>
-                    <Avatar src='/profilepic.png' name="as a programmer" size={'sm'} />
+                    <Avatar name={userProfile.username} src={userProfile.profilePicURL} size={'sm'} />
                     <Text fontWeight={'bold'} fontSize={12}>
-                    asaprogrammer_
+                    {userProfile.username}
                     </Text>
                   </Flex>
 
@@ -86,7 +88,7 @@ const ProfilePost = ({ img }) => {
                 </Flex>
 
                 <Text fontWeight={'medium'} fontSize={12} mx={1} my={2}>
-                  feeling good ...
+                  {post.caption}
                 </Text>
 
                 <Divider my={4} bg={'gray.500'} />

@@ -8,6 +8,7 @@ const ProfilePosts = () => {
   const noPostsFound = !isLoading && posts.length === 0
 
   if (noPostsFound) return <NoPostsFound />
+  console.log({ posts })
 
   return (
     <Grid

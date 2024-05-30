@@ -18,7 +18,7 @@ const useGetUserPosts = () => {
       setPosts([])
 
       try {
-        const q = query(collection(firestore, 'posts'), where('createdBy', '==', userProfile.uid), orderBy('createdAt', 'desc'))
+        const q = query(collection(firestore, 'posts'), where('createdBy', '==', userProfile.uid))
 
         const querySnapshot = await getDocs(q)
 
@@ -27,10 +27,14 @@ const useGetUserPosts = () => {
           posts.push({ ...doc.data(), id: doc.id })
         })
 
+        posts.sort((a, b) => b.createdAt - a.createdAt)
+
         setPosts(posts)
       } catch (error) {
         showToast('Error', error.message, 'error')
         setPosts([])
+      } finally {
+        setIsLoading(false)
       }
     }
 
