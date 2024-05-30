@@ -9,6 +9,7 @@ const useSearchUser = () => {
   const showToast = useShowToast()
 
   const getUserProfile = async (username) => {
+    setIsLoading(true)
     try {
       const q = query(collection(firestore, 'users'), where('username', '==', username))
 
@@ -16,7 +17,7 @@ const useSearchUser = () => {
 
       if (querySnapshot.empty) return showToast('Error', 'User not found', 'error')
 
-      querySnapshot.forEach(doc => { setUser(doc) })
+      querySnapshot.forEach(doc => { setUser(doc.data()) })
     } catch (error) {
       showToast('Error', error.message, 'error')
     } finally {
