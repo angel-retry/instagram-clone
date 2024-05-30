@@ -4,9 +4,9 @@ import useUserProfileStore from '../store/userProfileStore'
 import useAuthStore from '../store/authStore'
 import usePostStore from '../store/postStore'
 import { useLocation } from 'react-router-dom'
-import { addDoc, arrayUnion, collection, doc, firestore, updateDoc } from 'firebase/firestore'
+import { addDoc, arrayUnion, collection, doc, updateDoc } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadString } from 'firebase/storage'
-import { storage } from '../firebase/firebase'
+import { storage, firestore } from '../firebase/firebase'
 
 const useCreatePost = () => {
   const showToast = useShowToast()
