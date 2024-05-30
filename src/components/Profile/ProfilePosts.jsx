@@ -22,7 +22,7 @@ const ProfilePosts = () => {
       {
         isLoading
           ? (
-              Array.from({ length: posts.length }, (_, index) => (
+              Array.from({ length: 6 }, (_, index) => (
                 <VStack key={index} alignItems={'flex-start'}>
                   <Skeleton w={'full'} aspectRatio={1 / 1}>
                     <Box>content wrapped</Box>

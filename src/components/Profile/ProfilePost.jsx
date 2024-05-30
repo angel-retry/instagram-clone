@@ -1,14 +1,16 @@
-import { Avatar, Box, Divider, Flex, GridItem, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, Text, useDisclosure, VStack } from '@chakra-ui/react'
+import { Avatar, Button, Divider, Flex, GridItem, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, Text, useDisclosure, VStack } from '@chakra-ui/react'
 import { AiFillHeart } from 'react-icons/ai'
 import { FaComment } from 'react-icons/fa'
 import { MdDelete } from 'react-icons/md'
 import Comment from '../Comment/Comment'
 import PostFooter from '../FeedPosts/PostFooter'
 import useUserProfileStore from '../../store/userProfileStore'
+import useAuthStore from '../../store/authStore'
 
 const ProfilePost = ({ post }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { userProfile } = useUserProfileStore()
+  const authUser = useAuthStore(state => state.user)
 
   return (
     <>
@@ -62,7 +64,7 @@ const ProfilePost = ({ post }) => {
         <ModalContent >
           <ModalCloseButton />
           <ModalBody bg={'black'} pb={5} >
-            <Flex gap={4} w={{ base: '90%', sm: '70%', md: 'full' }} mx={'auto'} >
+            <Flex gap={4} w={{ base: '90%', sm: '70%', md: 'full' }} mx={'auto'} maxH={'90vh'} minH={'50vh'} >
               <Flex
                 borderRadius={4}
                 overflow={'hidden'}
@@ -70,7 +72,7 @@ const ProfilePost = ({ post }) => {
                 alignItems={'center'}
                 justifyContent={'center'}
               >
-                <Image src={post.imageURL} alt='profile post' maxH={'500px'}/>
+                <Image src={post.imageURL} alt='profile post' />
               </Flex>
 
               <Flex flex={1} flexDir={'column'} px={10} display={{ base: 'none', md: 'flex' }}>
@@ -81,10 +83,13 @@ const ProfilePost = ({ post }) => {
                     {userProfile.username}
                     </Text>
                   </Flex>
+                  { authUser?.uid === userProfile.uid && (
+                    <Button _hover={{ color: 'red.600', bg: 'whiteAlpha.300' }} borderRadius={4} p={1} bg={'transparent'} size={'sm'}>
+                      <MdDelete size={20} cursor={'pointer'}/>
+                    </Button>
+                  )
+                  }
 
-                  <Box _hover={{ color: 'red.600', bg: 'whiteAlpha.300' }} borderRadius={4} p={1}>
-                    <MdDelete size={20} cursor={'pointer'}/>
-                  </Box>
                 </Flex>
 
                 <Text fontWeight={'medium'} fontSize={12} mx={1} my={2}>
