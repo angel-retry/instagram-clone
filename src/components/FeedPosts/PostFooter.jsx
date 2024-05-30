@@ -25,7 +25,6 @@ const PostFooter = ({ post, username, isProfilePage }) => {
     try {
       await handlePostComment(post.id, comment)
       setComment('')
-      console.log('isCommenting', isCommenting)
     } catch (error) {
       showToast('Error', error.message, 'error')
       console.error(error)
