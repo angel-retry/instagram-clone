@@ -1,13 +1,16 @@
-import { Box, Button, Flex, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Textarea, Tooltip, useDisclosure } from '@chakra-ui/react'
+import { Box, Button, CloseButton, Flex, Image, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Textarea, Tooltip, useDisclosure } from '@chakra-ui/react'
 import { CreatePostLogo } from '../../assets/constants'
 import { BsFillImageFill } from 'react-icons/bs'
 import { useRef, useState } from 'react'
+import usePreviewImg from '../../hooks/usePreviewImg'
 
 const CreatePost = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const imageRef = useRef(null)
 
   const [caption, setCaption] = useState(null)
+
+  const { selectedFile, handleImageChange, setSelectedFile } = usePreviewImg()
 
   return (
     <>
@@ -44,9 +47,21 @@ const CreatePost = () => {
           <ModalBody pb={6}>
             <Textarea placeholder='Post caption' value={caption} onChange={e => setCaption(e.target.value)} />
 
-            <Input type='file' hidden ref={imageRef} />
+            <Input type='file' hidden ref={imageRef} onChange={handleImageChange} />
 
             <BsFillImageFill style={{ marginTop: '15px', marginLeft: '5px', cursor: 'pointer' }} size={16} onClick={() => imageRef.current.click()} />
+
+            {selectedFile && (
+              <Flex w={'full'} mt={5} position={'relative'} justifyContent={'center'}>
+                <Image src={selectedFile} />
+                <CloseButton
+                  position={'absolute'}
+                  top={2}
+                  right={2}
+                  onClick={() => setSelectedFile(null)}
+                />
+              </Flex>
+            )}
           </ModalBody>
 
           <ModalFooter>
