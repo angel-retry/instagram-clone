@@ -2,7 +2,7 @@ import { useState } from 'react'
 import useShowToast from './useShowToast'
 import { deleteObject, ref } from 'firebase/storage'
 import { firestore, storage } from '../firebase/firebase'
-import { arrayRemove, doc, updateDoc } from 'firebase/firestore'
+import { arrayRemove, deleteDoc, doc, updateDoc } from 'firebase/firestore'
 import useAuthStore from '../store/authStore'
 
 const useDeletePost = (postId) => {
@@ -11,6 +11,7 @@ const useDeletePost = (postId) => {
   const authUser = useAuthStore(state => state.user)
 
   const handleDeletePost = async () => {
+    if (isDeleting) return
     // 跳出警告是否要刪除
     if (!window.confirm('Are you sure you want to delete the post?')) return
     setIsDeleting(true)
@@ -24,7 +25,7 @@ const useDeletePost = (postId) => {
       // 取得使用者的資訊
       const userRef = doc(firestore, 'users', authUser.uid)
       // 刪掉post
-      await deleteObject(doc(firestore, 'posts', postId))
+      await deleteDoc(doc(firestore, 'posts', postId))
       // 更新使用者post資訊
       await updateDoc(userRef, {
         posts: arrayRemove(postId)

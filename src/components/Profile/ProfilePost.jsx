@@ -6,11 +6,28 @@ import Comment from '../Comment/Comment'
 import PostFooter from '../FeedPosts/PostFooter'
 import useUserProfileStore from '../../store/userProfileStore'
 import useAuthStore from '../../store/authStore'
+import useDeletePost from '../../hooks/useDeletePost'
+import useShowToast from '../../hooks/useShowToast'
+import usePostStore from '../../store/postStore'
 
 const ProfilePost = ({ post }) => {
+  const showToast = useShowToast()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { userProfile } = useUserProfileStore()
   const authUser = useAuthStore(state => state.user)
+  const deletePost = usePostStore(state => state.deletePost)
+
+  const { isDeleting, handleDeletePost } = useDeletePost(post.id)
+
+  const onDeletingPost = async () => {
+    try {
+      await handleDeletePost()
+      deletePost(post.id)
+      showToast('Success', 'Post deleted successfully', 'success')
+    } catch (error) {
+      showToast('Error', error.message, 'error')
+    }
+  }
 
   return (
     <>
@@ -84,7 +101,15 @@ const ProfilePost = ({ post }) => {
                     </Text>
                   </Flex>
                   { authUser?.uid === userProfile.uid && (
-                    <Button _hover={{ color: 'red.600', bg: 'whiteAlpha.300' }} borderRadius={4} p={1} bg={'transparent'} size={'sm'}>
+                    <Button
+                      _hover={{ color: 'red.600', bg: 'whiteAlpha.300' }}
+                      borderRadius={4}
+                      p={1}
+                      bg={'transparent'}
+                      size={'sm'}
+                      onClick={onDeletingPost}
+                      isLoading={isDeleting}
+                    >
                       <MdDelete size={20} cursor={'pointer'}/>
                     </Button>
                   )
