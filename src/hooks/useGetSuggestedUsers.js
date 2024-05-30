@@ -3,7 +3,7 @@ import useAuthStore from '../store/authStore'
 import useShowToast from '../hooks/useShowToast'
 import { query } from 'firebase/database'
 import { collection, getDocs, limit, orderBy, where } from 'firebase/firestore'
-import firebase from 'firebase/compat/app'
+import { firestore } from '../firebase/firebase'
 
 const useGetSuggestedUsers = () => {
   const [isLoading, setIsLoading] = useState(true)
@@ -16,7 +16,7 @@ const useGetSuggestedUsers = () => {
       setIsLoading(true)
       try {
         const q = query(
-          collection(firebase, 'users'),
+          collection(firestore, 'users'),
           where('uid', 'not-in', [authUser.uid, ...authUser.following]), // not-in 篩選屬性值不在給定數組中的文件，是多值比較，最多只能處理10個值
           orderBy('uid'),
           limit(3)
