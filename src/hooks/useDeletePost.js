@@ -4,16 +4,19 @@ import { deleteObject, ref } from 'firebase/storage'
 import { firestore, storage } from '../firebase/firebase'
 import { arrayRemove, deleteDoc, doc, updateDoc } from 'firebase/firestore'
 import useAuthStore from '../store/authStore'
+import usePostStore from '../store/postStore'
+import useUserProfileStore from '../store/userProfileStore'
 
 const useDeletePost = (postId) => {
   const showToast = useShowToast()
   const [isDeleting, setIsDeleting] = useState(false)
   const authUser = useAuthStore(state => state.user)
+  const deletePost = usePostStore(state => state.deletePost)
+  const removePost = useUserProfileStore(state => state.removePost)
 
   const handleDeletePost = async () => {
-    if (isDeleting) return
     // 跳出警告是否要刪除
-    if (!window.confirm('Are you sure you want to delete the post?')) return
+    if (isDeleting) return
     setIsDeleting(true)
 
     try {
@@ -30,6 +33,10 @@ const useDeletePost = (postId) => {
       await updateDoc(userRef, {
         posts: arrayRemove(postId)
       })
+
+      deletePost(postId)
+      removePost(postId)
+      showToast('Success', 'Post deleted successfully', 'success')
     } catch (error) {
       showToast('Error', error.message, 'error')
     } finally {

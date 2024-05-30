@@ -8,22 +8,19 @@ import useUserProfileStore from '../../store/userProfileStore'
 import useAuthStore from '../../store/authStore'
 import useDeletePost from '../../hooks/useDeletePost'
 import useShowToast from '../../hooks/useShowToast'
-import usePostStore from '../../store/postStore'
 
 const ProfilePost = ({ post }) => {
   const showToast = useShowToast()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { userProfile } = useUserProfileStore()
   const authUser = useAuthStore(state => state.user)
-  const deletePost = usePostStore(state => state.deletePost)
 
   const { isDeleting, handleDeletePost } = useDeletePost(post.id)
 
   const onDeletingPost = async () => {
+    if (!window.confirm('Are you sure you want to delete the post?')) return
     try {
       await handleDeletePost()
-      deletePost(post.id)
-      showToast('Success', 'Post deleted successfully', 'success')
     } catch (error) {
       showToast('Error', error.message, 'error')
     }
