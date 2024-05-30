@@ -121,21 +121,14 @@ const ProfilePost = ({ post }) => {
                 <Divider my={4} bg={'gray.500'} />
 
                 <VStack w={'full'} alignItems={'start'} maxH={'350px'} overflowY={'auto'}>
-                  <Comment createdAt='1d ago' username='asaprogrammer' profilePic='/profilepic.png' text='Dummy images from unsplash' />
-                  <Comment createdAt='1d ago' username='asaprogrammer' profilePic='/profilepic.png' text='Dummy images from unsplash' />
-                  <Comment createdAt='1d ago' username='asaprogrammer' profilePic='/profilepic.png' text='Dummy images from unsplash' />
-                  <Comment createdAt='1d ago' username='asaprogrammer' profilePic='/profilepic.png' text='Dummy images from unsplash' />
-                  <Comment createdAt='1d ago' username='asaprogrammer' profilePic='/profilepic.png' text='Dummy images from unsplash' />
-                  <Comment createdAt='1d ago' username='asaprogrammer' profilePic='/profilepic.png' text='Dummy images from unsplash' />
-                  <Comment createdAt='1d ago' username='asaprogrammer' profilePic='/profilepic.png' text='Dummy images from unsplash' />
-                  <Comment createdAt='1d ago' username='asaprogrammer' profilePic='/profilepic.png' text='Dummy images from unsplash' />
-                  <Comment createdAt='1d ago' username='asaprogrammer' profilePic='/profilepic.png' text='Dummy images from unsplash' />
-                  <Comment createdAt='1d ago' username='asaprogrammer' profilePic='/profilepic.png' text='Dummy images from unsplash' />
+                  {post.comments.map(comment => (
+                    <Comment key={comment.id} comment ={comment} />
+                  ))}
                 </VStack>
 
                 <Divider bg={'gray.800'} mt={'auto'} />
 
-                <PostFooter isProfilePage={true}/>
+                <PostFooter isProfilePage={true} post={post}/>
 
               </Flex>
             </Flex>

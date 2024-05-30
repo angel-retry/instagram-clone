@@ -1,23 +1,23 @@
 import { Avatar, Flex, Text } from '@chakra-ui/react'
 
-const Comment = ({ createdAt, username, profilePic, text }) => {
+const Comment = ({ comment }) => {
   return (
     <Flex gap={4}>
-      <Avatar src={profilePic} name={username} size={'sm'} />
+      {/* <Avatar src={profilePic} name={username} size={'sm'} /> */}
 
       <Flex direction={'column'}>
         <Flex gap={2} direction={{ base: 'column', lg: 'row' }}>
           <Text fontWeight={'bold'} fontSize={12}>
-            {username}
+            {/* {username} */}
           </Text>
 
           <Text fontSize={14}>
-            {text}
+            {comment.comment}
           </Text>
         </Flex>
 
         <Text fontSize={12} color={'gray'}>
-          {createdAt}
+          {/* {comment.createdAt} */}
         </Text>
       </Flex>
     </Flex>
