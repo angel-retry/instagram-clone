@@ -12,7 +12,7 @@ const Comment = ({ comment }) => {
       <Link
         to={`/${userProfile.username}`}
       >
-        <Avatar name={userProfile.username} src={userProfile.profilePicIMG} size={'sm'} />
+        <Avatar name={userProfile.username} src={userProfile.profilePicURL} size={'sm'} />
       </Link>
 
       <Flex direction={'column'}>
