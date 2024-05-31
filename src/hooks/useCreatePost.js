@@ -51,8 +51,9 @@ const useCreatePost = () => {
       // newPost新增上傳圖片屬性
       newPost.imageURL = downloadURL
 
-      createPost({ ...newPost, id: postDocRef.id })
-      addPost({ ...newPost, id: postDocRef.id })
+      if (userProfile.uid === authUser.uid) createPost({ ...newPost, id: postDocRef.id })
+
+      if (pathname === `/${authUser.username}` && userProfile.uid === authUser.uid) addPost({ ...newPost, id: postDocRef.id })
 
       showToast('Success', 'Post created successfully', 'success')
     } catch (error) {
