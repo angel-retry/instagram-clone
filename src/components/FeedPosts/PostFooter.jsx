@@ -23,7 +23,6 @@ const PostFooter = ({ post, creatorProfile, isProfilePage }) => {
       setComment('')
     } catch (error) {
       showToast('Error', error.message, 'error')
-      console.error(error)
     }
   }
 
@@ -63,7 +62,7 @@ const PostFooter = ({ post, creatorProfile, isProfilePage }) => {
             <Text fontSize={'sm'} color={'gray'} cursor={'pointer'} onClick={onOpen}>
               View all {post.comments.length} comments
             </Text>
-            <CommentsModal isOpen={isOpen} onClose={onClose} comments={post.comments} />
+            <CommentsModal isOpen={isOpen} onClose={onClose} post={post} />
           </>
           )}
 
