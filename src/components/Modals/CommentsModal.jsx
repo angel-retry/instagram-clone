@@ -1,13 +1,14 @@
 import { Button, Flex, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay } from '@chakra-ui/react'
 import Comment from '../Comment/Comment'
 import usePostComment from '../../hooks/usePostComment'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import useShowToast from '../../hooks/useShowToast'
 
 const CommentsModal = ({ isOpen, onClose, post }) => {
   const { isCommenting, handlePostComment } = usePostComment()
   const showToast = useShowToast()
   const commentRef = useRef(null)
+  const commentContainerRef = useRef(null)
 
   const handleSubmitComment = async (e) => {
     e.preventDefault()
@@ -19,6 +20,18 @@ const CommentsModal = ({ isOpen, onClose, post }) => {
     }
   }
 
+  useEffect(() => {
+    const scrollToBottom = () => {
+      if (commentContainerRef.current) {
+        commentContainerRef.current.scrollTop = commentContainerRef.current.scrollHeight
+      }
+    }
+
+    if (isOpen) {
+      scrollToBottom()
+    }
+  }, [isOpen, post.comments])
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} motionPreset='slideInLeft'>
         <ModalOverlay />
@@ -26,7 +39,7 @@ const CommentsModal = ({ isOpen, onClose, post }) => {
           <ModalHeader>Comments</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <Flex mb={4} gap={4} flexDir={'column'} maxH={'250px'} overflowY={'auto'}>
+            <Flex mb={4} gap={4} flexDir={'column'} maxH={'250px'} overflowY={'auto'} ref={commentContainerRef}>
               {post.comments.map((comment, index) => (
                 <Comment key={index} comment={comment} />
               ))}

@@ -8,6 +8,7 @@ import useUserProfileStore from '../../store/userProfileStore'
 import useAuthStore from '../../store/authStore'
 import useDeletePost from '../../hooks/useDeletePost'
 import useShowToast from '../../hooks/useShowToast'
+import { useEffect, useRef } from 'react'
 
 const ProfilePost = ({ post }) => {
   const showToast = useShowToast()
@@ -17,6 +18,8 @@ const ProfilePost = ({ post }) => {
 
   const { isDeleting, handleDeletePost } = useDeletePost(post.id)
 
+  const commentContainerRef = useRef(null)
+
   const onDeletingPost = async () => {
     if (!window.confirm('Are you sure you want to delete the post?')) return
     try {
@@ -25,6 +28,15 @@ const ProfilePost = ({ post }) => {
       showToast('Error', error.message, 'error')
     }
   }
+
+  useEffect(() => {
+    const scrollToBottom = () => {
+      if (commentContainerRef.current) {
+        commentContainerRef.current.scrollTop = commentContainerRef.current.scrollHeight
+      }
+    }
+    if (isOpen) return scrollToBottom()
+  }, [isOpen, post.comments])
 
   return (
     <>
@@ -120,7 +132,7 @@ const ProfilePost = ({ post }) => {
 
                 <Divider my={4} bg={'gray.500'} />
 
-                <VStack w={'full'} alignItems={'start'} maxH={'350px'} overflowY={'auto'}>
+                <VStack w={'full'} alignItems={'start'} maxH={'350px'} overflowY={'auto'} ref={commentContainerRef} mb={2}>
                   {post.comments.map(comment => (
                     <Comment key={comment.id} comment ={comment} />
                   ))}
