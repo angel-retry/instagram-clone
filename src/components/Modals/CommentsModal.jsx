@@ -1,14 +1,19 @@
 import { Button, Flex, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay } from '@chakra-ui/react'
+import Comment from '../Comment/Comment'
 
-const CommentModal = ({ isOpen, onClose }) => {
+const CommentsModal = ({ isOpen, onClose, comments }) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} motionPreset='slideInLeft'>
         <ModalOverlay />
         <ModalContent bg={'black'}>
           <ModalHeader>Comments</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <Flex mb={4} gap={4} flexDir={'column'} maxH={'250px'} overflowY={'auto'}></Flex>
+            <Flex mb={4} gap={4} flexDir={'column'} maxH={'250px'} overflowY={'auto'}>
+              {comments.map(comment => (
+                <Comment key={comment.id} comment={comment} />
+              ))}
+            </Flex>
 
             <form style={{ marginTop: '2rem' }}>
               <Input placeholder='Comment' size={'sm'} />
@@ -24,4 +29,4 @@ const CommentModal = ({ isOpen, onClose }) => {
   )
 }
 
-export default CommentModal
+export default CommentsModal

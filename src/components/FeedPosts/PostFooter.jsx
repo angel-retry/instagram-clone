@@ -6,7 +6,7 @@ import useShowToast from '../../hooks/useShowToast'
 import useAuthStore from '../../store/authStore'
 import useLikePost from '../../hooks/useLikePost'
 import { timeAgo } from '../../utils/timeAgo'
-import CommentModal from '../Modals/CommentModal'
+import CommentsModal from '../Modals/CommentsModal'
 
 const PostFooter = ({ post, creatorProfile, isProfilePage }) => {
   const { isCommenting, handlePostComment } = usePostComment()
@@ -63,7 +63,7 @@ const PostFooter = ({ post, creatorProfile, isProfilePage }) => {
             <Text fontSize={'sm'} color={'gray'} cursor={'pointer'} onClick={onOpen}>
               View all {post.comments.length} comments
             </Text>
-            <CommentModal isOpen={isOpen} onClose={onClose} />
+            <CommentsModal isOpen={isOpen} onClose={onClose} comments={post.comments} />
           </>
           )}
 
