@@ -12,7 +12,7 @@ const FeedPost = ({ post }) => {
       <Box my={2} borderRadius={4} overflow={'hidden'}>
         <Image src={post.imageURL} w={'full'} />
       </Box>
-      {/* <PostFooter username={userProfile.username} post={post} /> */}
+      <PostFooter username={userProfile?.username} post={post} />
     </>
   )
 }

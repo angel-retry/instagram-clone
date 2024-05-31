@@ -45,13 +45,16 @@ const PostFooter = ({ post, username, isProfilePage }) => {
           <Text fontSize={'sm'} fontWeight={700}>
             {username}{' '}
             <Text as={'span'} fontWeight={400}>
-              Feeling good...
+             {post.caption}
             </Text>
           </Text>
 
-          <Text fontSize={'sm'} color={'gray'}>
-            View all 1,000 comments
+          {post.comments && (
+            <Text fontSize={'sm'} color={'gray'}>
+            View all {post.comments.length} comments
           </Text>
+          )}
+
         </>
       )}
 

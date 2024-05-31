@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Flex, Skeleton, SkeletonCircle, Text } from '@chakra-ui/react'
+import { Avatar, Box, Button, Flex, Skeleton, SkeletonCircle } from '@chakra-ui/react'
 import { timeAgo } from '../../utils/timeAgo'
 import { Link } from 'react-router-dom'
 import useFollowUser from '../../hooks/useFollowUser'
