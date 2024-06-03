@@ -1,7 +1,10 @@
 import { Tooltip, Box, Flex } from '@chakra-ui/react'
 import { NotificationsLogo } from '../../assets/constants'
+import useGetNotifications from '../../hooks/useGetNotifications'
 
 const Notifications = () => {
+  const { notifications } = useGetNotifications()
+
   return (
     <Tooltip
       hasArrow
@@ -25,6 +28,7 @@ const Notifications = () => {
           Notifications
         </Box>
       </Flex>
+
     </Tooltip>
   )
 }
