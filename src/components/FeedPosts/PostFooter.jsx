@@ -9,8 +9,8 @@ import { timeAgo } from '../../utils/timeAgo'
 import CommentsModal from '../Modals/CommentsModal'
 
 const PostFooter = ({ post, creatorProfile, isProfilePage }) => {
-  const { isCommenting, handlePostComment } = usePostComment()
   const [comment, setComment] = useState('')
+  const { isCommenting, handlePostComment } = usePostComment(post, comment)
   const showToast = useShowToast()
   const authUser = useAuthStore(state => state.user)
   const commentRef = useRef(null)
@@ -19,7 +19,7 @@ const PostFooter = ({ post, creatorProfile, isProfilePage }) => {
 
   const handleSubmitComment = async () => {
     try {
-      await handlePostComment(post.id, comment)
+      await handlePostComment()
       setComment('')
     } catch (error) {
       showToast('Error', error.message, 'error')
