@@ -1,4 +1,4 @@
-import { Tooltip, Box, Flex, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, Avatar, Text, Image, Link, Spinner, Skeleton, SkeletonCircle, VStack } from '@chakra-ui/react'
+import { Tooltip, Box, Flex, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, Avatar, Text, Image, Link, Spinner, Skeleton, SkeletonCircle, Circle } from '@chakra-ui/react'
 import { NotificationsLogo } from '../../assets/constants'
 import useGetNotifications from '../../hooks/useGetNotifications'
 import { Link as RouterLink } from 'react-router-dom'
@@ -8,6 +8,14 @@ import { timeAgo } from '../../utils/timeAgo'
 const Notifications = () => {
   const { notifications, isLoading } = useGetNotifications()
   const { isOpen, onOpen, onClose } = useDisclosure()
+
+  const notReadNotifications = notifications.filter(notification => !notification.isRead)
+
+  console.log(notReadNotifications)
+
+  const handleClose = async () => {
+    onClose()
+  }
 
   return (
     <>
@@ -29,10 +37,36 @@ const Notifications = () => {
           w={{ base: 10, md: 'full' }}
           onClick={onOpen}
         >
-          <NotificationsLogo size={25} />
-          <Box display={{ base: 'none', md: 'block' }}>
-            Notifications
-          </Box>
+
+          {
+            notReadNotifications
+              ? (
+                  <>
+                    <Flex position={'relative'} >
+                      <NotificationsLogo size={25} />
+                      <Circle w={'8px'} h={'8px'} bg={'red'} position={'absolute'} right={-1} />
+                    </Flex>
+
+                    <Box display={{ base: 'none', md: 'flex' }} gap={3} alignItems={'center'} >
+                      Notifications
+
+                      <Circle size={'20px'} bg='red' color='white' fontSize={'12px'} >
+                      {notReadNotifications.length}</Circle>
+
+                    </Box>
+                  </>
+
+                )
+              : (
+              <>
+                <NotificationsLogo size={25} />
+                <Box display={{ base: 'none', md: 'block' }}>
+                  Notifications
+                </Box>
+              </>
+                )
+          }
+
         </Flex>
       </Tooltip>
 
@@ -46,7 +80,7 @@ const Notifications = () => {
             { !isLoading && !notifications && <NoNotifications/>}
             { !isLoading && notifications && (
               notifications.map((notification) => (
-                <Notification key={notification.id} notification={notification} onClose={onClose} />
+                <Notification key={notification.id} notification={notification} onClose={handleClose} />
               ))
             )}
 
@@ -67,8 +101,8 @@ const Notification = ({ notification, onClose }) => {
     {
       !isLoading
         ? (
-        <Flex alignItems={'center'} justifyContent={'space-between'} w={'full'} _hover={{ bg: 'gray.800' }} p={3}>
-          <Flex alignItems={'center'} gap={2}>
+        <Flex alignItems={'center'} justifyContent={'space-between'} w={'full'} _hover={{ bg: 'gray.800' }} p={{ base: 0, md: 3 }} mb={{ base: 3, md: 0 }} gap={3}>
+          <Flex alignItems={'center'} gap={3}>
             <Link
               as={RouterLink}
               to={`/${userProfile.username}`}
