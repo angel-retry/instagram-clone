@@ -6,6 +6,7 @@ import useAuthStore from '../store/authStore'
 import useUserProfileStore from '../store/userProfileStore'
 
 const useFollowUser = (userId) => {
+  console.log(userId)
   const [isUpdating, setIsUpdating] = useState(false)
   const [isFollowing, setIsFollowing] = useState(false)
   const { user, setUser } = useAuthStore()
@@ -13,6 +14,7 @@ const useFollowUser = (userId) => {
   const showToast = useShowToast()
 
   const handleFollowUser = async () => {
+    if (!userId) return showToast('Error', 'there is no User to follow', 'error')
     setIsUpdating(true)
     try {
       const currentUserRef = doc(firestore, 'users', user.uid)
@@ -34,10 +36,17 @@ const useFollowUser = (userId) => {
         })
 
         if (userProfile) {
-          setUserProfile({
-            ...userProfile,
-            followers: userProfile.followers.filter(uid => uid !== user.uid)
-          })
+          if (userProfile.uid === user.uid) {
+            setUserProfile({
+              ...userProfile,
+              following: userProfile.following.filter(uid => uid !== userId)
+            })
+          } else {
+            setUserProfile({
+              ...userProfile,
+              followers: userProfile.followers.filter(uid => uid !== user.uid)
+            })
+          }
         }
 
         localStorage.setItem('user-info', JSON.stringify({
@@ -54,10 +63,19 @@ const useFollowUser = (userId) => {
         })
 
         if (userProfile) {
-          setUserProfile({
-            ...userProfile,
-            followers: [...user.followers, user.uid]
-          })
+          if (userProfile.uid === user.uid) {
+            console.log('authUser', user.uid)
+            console.log('userId', userId)
+            setUserProfile({
+              ...userProfile,
+              following: [...user.following, userId]
+            })
+          } else {
+            setUserProfile({
+              ...userProfile,
+              followers: [...userProfile.followers, user.uid]
+            })
+          }
         }
 
         localStorage.setItem('user-info', JSON.stringify({

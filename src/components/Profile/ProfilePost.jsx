@@ -133,8 +133,8 @@ const ProfilePost = ({ post }) => {
                 <Divider my={4} bg={'gray.500'} />
 
                 <VStack w={'full'} alignItems={'start'} maxH={'350px'} overflowY={'auto'} ref={commentContainerRef} mb={2}>
-                  {post.comments.map(comment => (
-                    <Comment key={comment.id} comment ={comment} />
+                  {post.comments.map((comment, index) => (
+                    <Comment key={index} comment ={comment} />
                   ))}
                 </VStack>
 

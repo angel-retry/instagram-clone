@@ -13,7 +13,7 @@ const SuggestedUsers = () => {
       <SuggestedHeader />
 
       {suggestedUsers.length !== 0 && (
-        <Flex alignItems={'center'} justifyContent={'space-between'} w={'full'}>
+        <Flex alignItems={'center'} justifyContent={'space-between'} w={'full'} >
         <Text fontSize={12} fontWeight={'bold'} color={'gray.500'}>
           Suggested for you
         </Text>
@@ -21,12 +21,12 @@ const SuggestedUsers = () => {
         <Text fontSize={12} fontWeight={'bold'} _hover={{ color: 'gray.400' }} cursor={'pointer'}>
           See All
         </Text>
-      </Flex>
+        </Flex>
       )}
 
-      { !isLoading && (
+      { !isLoading && suggestedUsers && (
         suggestedUsers.map((user) => (
-            <SuggestedUser key={user.id} user={user} />
+            <SuggestedUser key={user.uid} user={user} />
         ))
       )}
 
