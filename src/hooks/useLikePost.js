@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import useShowToast from './useShowToast'
 import useAuthStore from '../store/authStore'
-import { arrayRemove, arrayUnion, doc, updateDoc } from 'firebase/firestore'
+import { arrayRemove, arrayUnion, deleteDoc, doc, setDoc, updateDoc } from 'firebase/firestore'
 import { firestore } from '../firebase/firebase'
 import usePostStore from '../store/postStore'
 
@@ -20,14 +20,36 @@ const useLikePost = (post) => {
     setIsUpdating(true)
 
     try {
+      // notificationRef
+      const notificationRef = doc(firestore, 'notifications', `${authUser.uid}_liked_${post.id}`)
       // postRef
       const postRef = doc(firestore, 'posts', post.id)
       await updateDoc(postRef, {
         likes: isLiked ? arrayRemove(authUser.uid) : arrayUnion(authUser.uid)
       })
       setIsLiked(!isLiked)
-      isLiked ? setLikes(likes - 1) : setLikes(likes + 1)
-      isLiked ? removeLike(post.id, authUser.uid) : addLike(post.id, authUser.uid)
+
+      // 建立通知
+      const notificationData = {
+        receiver: post.createdBy,
+        sender: authUser.uid,
+        type: 'like',
+        postId: post.id,
+        createdAt: Date.now(),
+        isRead: false
+      }
+
+      if (isLiked) {
+        setLikes(likes - 1)
+        removeLike(post.id, authUser.uid)
+        await deleteDoc(notificationRef, notificationData)
+      } else {
+        if (authUser.uid !== post.createdBy) {
+          await setDoc(notificationRef, notificationData)
+        }
+        setLikes(likes + 1)
+        addLike(post.id, authUser.uid)
+      }
     } catch (error) {
       showToast('Error', error.message, 'error')
     } finally {
