@@ -13,7 +13,7 @@ const useGetNotifications = () => {
   useEffect(() => {
     const getNotifications = async () => {
       setIsLoading(true)
-      const q = query(collection(firestore, 'notifications'), where('receiver', '==', authUser.uid))
+      const q = query(collection(firestore, 'notifications'), where('receiverId', '==', authUser.uid))
 
       try {
         const querySnapShot = await getDocs(q)

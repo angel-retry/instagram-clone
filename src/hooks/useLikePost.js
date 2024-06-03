@@ -31,10 +31,11 @@ const useLikePost = (post) => {
 
       // 建立通知
       const notificationData = {
-        receiver: post.createdBy,
-        sender: authUser.uid,
-        type: 'like',
+        receiverId: post.createdBy,
+        senderId: authUser.uid,
+        type: 'liked',
         postId: post.id,
+        postImage: post.imageURL,
         createdAt: Date.now(),
         isRead: false
       }
