@@ -23,15 +23,15 @@ import useEditProfile from '../../hooks/useEditProfile'
 import useShowToast from '../../hooks/useShowToast'
 
 const EditProfile = ({ isOpen, onClose }) => {
-  const [inputs, setInputs] = useState({
-    fullName: '',
-    username: '',
-    bio: ''
-  })
-
   const showToast = useShowToast()
 
   const authUser = useAuthStore(state => state.user)
+
+  const [inputs, setInputs] = useState({
+    fullName: authUser.fullName,
+    username: authUser.username,
+    bio: authUser.bio
+  })
 
   const fileRef = useRef(null)
 
@@ -39,13 +39,22 @@ const EditProfile = ({ isOpen, onClose }) => {
 
   const { isUpdating, editProfile } = useEditProfile()
 
+  const [isInvalid, setIsInvalid] = useState(false)
+
   const handleEditProfile = async () => {
+    setIsInvalid(false)
+    if (!inputs.fullName || !inputs.username) {
+      setIsInvalid(true)
+      return showToast('Error', 'Please fill all th fields', 'error')
+    }
     try {
       await editProfile(inputs, selectedFile)
       setSelectedFile(null) // 清空目前所選的檔案
       onClose() // 關掉modal
     } catch (error) {
       showToast('Error', error.message, 'error')
+    } finally {
+      setIsInvalid(false)
     }
   }
 
@@ -87,8 +96,9 @@ const EditProfile = ({ isOpen, onClose }) => {
                   placeholder="Full Name"
                   size={'sm'}
                   type="text"
-                  value={inputs.fullName || authUser.fullName }
+                  value={inputs.fullName }
                   onChange={e => setInputs({ ...inputs, fullName: e.target.value })}
+                  isInvalid={isInvalid}
                 />
               </FormControl>
 
@@ -98,8 +108,9 @@ const EditProfile = ({ isOpen, onClose }) => {
                   placeholder="Username"
                   size={'sm'}
                   type="email"
-                  value={inputs.username || authUser.username }
+                  value={inputs.username }
                   onChange={e => setInputs({ ...inputs, username: e.target.value })}
+                  isInvalid={isInvalid}
                 />
               </FormControl>
 
@@ -110,7 +121,7 @@ const EditProfile = ({ isOpen, onClose }) => {
                   size={'sm'}
                   type="password"
                   cols={3}
-                  value={inputs.bio || authUser.bio }
+                  value={inputs.bio}
                   onChange={e => setInputs({ ...inputs, bio: e.target.value })}
                 />
               </FormControl>
