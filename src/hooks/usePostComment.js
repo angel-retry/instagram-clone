@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import useShowToast from './useShowToast'
 import useAuthStore from '../store/authStore'
-import { arrayUnion, doc, setDoc, updateDoc } from 'firebase/firestore'
+import { addDoc, arrayUnion, collection, doc, updateDoc } from 'firebase/firestore'
 import { firestore } from '../firebase/firebase'
 import usePostStore from '../store/postStore'
 
@@ -31,16 +31,16 @@ const usePostComment = (post, comment) => {
       postId: post.id,
       postImage: post.imageURL,
       createdAt: Date.now(),
-      isRead: false
+      isRead: false,
+      comment
     }
-
-    // notificationRef
-    const notificationRef = doc(firestore, 'notifications', `${authUser.uid}_commented_${post.id}`)
 
     try {
       await updateDoc(doc(firestore, 'posts', post.id), { comments: arrayUnion(newComment) })
       addComment(post.id, newComment)
-      setDoc(notificationRef, notificationData)
+      if (authUser.uid !== post.createdBy) {
+        await addDoc(collection(firestore, 'notifications'), notificationData)
+      }
     } catch (error) {
       showToast('Error', error.message, 'error')
     } finally {
