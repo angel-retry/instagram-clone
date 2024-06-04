@@ -4,6 +4,7 @@ import useGetNotifications from '../../hooks/useGetNotifications'
 import { Link as RouterLink } from 'react-router-dom'
 import useGetUserProfileById from '../../hooks/useGetUserProfileById'
 import { timeAgo } from '../../utils/timeAgo'
+import useUpdateNotifications from '../../hooks/useUpdateNotifications'
 
 const Notifications = () => {
   const { notifications, isLoading } = useGetNotifications()
@@ -13,8 +14,11 @@ const Notifications = () => {
 
   console.log(notReadNotifications)
 
+  const { updateNotifications, isUpdating } = useUpdateNotifications(notReadNotifications)
+
   const handleClose = async () => {
-    onClose()
+    await updateNotifications()
+    if (!isUpdating) onClose()
   }
 
   return (
@@ -39,7 +43,7 @@ const Notifications = () => {
         >
 
           {
-            notReadNotifications
+            notReadNotifications.length > 0
               ? (
                   <>
                     <Flex position={'relative'} >
@@ -70,7 +74,7 @@ const Notifications = () => {
         </Flex>
       </Tooltip>
 
-      <Modal isOpen={isOpen} onClose={onClose} motionPreset='slideInLeft'>
+      <Modal isOpen={isOpen} onClose={handleClose} motionPreset='slideInLeft'>
         <ModalOverlay />
         <ModalContent bg={'black'} border={'1px solid gray'} maxW={'400px'}>
           <ModalHeader>Notifications</ModalHeader>
