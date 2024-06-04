@@ -106,7 +106,7 @@ const Notification = ({ notification, onClose }) => {
       !isLoading
         ? (
         <Flex alignItems={'center'} justifyContent={'space-between'} w={'full'} _hover={{ bg: 'gray.800' }} p={{ base: 0, md: 3 }} mb={{ base: 3, md: 0 }} gap={3}>
-          <Flex alignItems={'center'} gap={3}>
+          <Flex alignItems={'center'} gap={3} opacity={notification.isRead ? '0.5' : '1'}>
             <Link
               as={RouterLink}
               to={`/${userProfile.username}`}
