@@ -124,8 +124,7 @@ const Notification = ({ notification, onClose }) => {
                 >
                   {userProfile.username}{' '}
                 </Link>
-                { notification.type }{' '}
-                your post.
+                < NotificationText type={notification.type} comment={notification.comment} />
               </Text>
               <Text fontSize={'sm'} color={'gray.500'}>
                - {timeAgo(notification.createdAt)}
@@ -155,5 +154,19 @@ const NoNotifications = () => {
     <Flex >
       <Text>No notification</Text>
     </Flex>
+  )
+}
+
+const NotificationText = ({ type, comment }) => {
+  return (
+    <>
+      {
+        type === 'liked' && (<>{type}{' '} your post</>)
+      }
+
+      {
+        type === 'commented' && (<>{type}{' '} on your post: [{comment}]</>)
+      }
+    </>
   )
 }

@@ -1,6 +1,7 @@
 import { Box, Container, Flex, Skeleton, SkeletonCircle, Text, VStack } from '@chakra-ui/react'
 import FeedPost from './FeedPost'
 import useGetFeedPosts from '../../hooks/useGetFeedPosts'
+import { InfoIcon } from '@chakra-ui/icons'
 
 const FeedPosts = () => {
   const { isLoading, posts } = useGetFeedPosts()
@@ -36,12 +37,15 @@ const FeedPosts = () => {
 
       { !isLoading && posts.length === 0 && (
         <>
-          <Text fontSize={'md'} color={'red.400'}>
+        <VStack color={'white'}>
+          <InfoIcon fontSize={'36px'} />
+          <Text fontSize={'md'} >
             Looks like you don&apos;t have any friends.
           </Text>
-          <Text color={'red.400'}>
+          <Text>
             Stop coding and go make some !!
           </Text>
+        </VStack>
         </>
       )}
     </Container>
