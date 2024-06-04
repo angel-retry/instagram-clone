@@ -12,7 +12,7 @@ const Notifications = () => {
 
   const notReadNotifications = notifications.filter(notification => !notification.isRead)
 
-  console.log(notReadNotifications)
+  console.log(notifications)
 
   const { updateNotifications, isUpdating } = useUpdateNotifications(notReadNotifications)
 
@@ -81,8 +81,8 @@ const Notifications = () => {
           <ModalCloseButton />
           <ModalBody pb={6}>
             { isLoading && <Spinner /> }
-            { !isLoading && !notifications && <NoNotifications/>}
-            { !isLoading && notifications && (
+            { !isLoading && notifications.length === 0 && <NoNotifications/>}
+            { !isLoading && notifications.length > 0 && (
               notifications.map((notification) => (
                 <Notification key={notification.id} notification={notification} onClose={handleClose} />
               ))
@@ -151,7 +151,7 @@ const Notification = ({ notification, onClose }) => {
 
 const NoNotifications = () => {
   return (
-    <Flex >
+    <Flex justifyContent={'center'} >
       <Text>No notification</Text>
     </Flex>
   )
