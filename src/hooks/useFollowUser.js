@@ -6,7 +6,6 @@ import useAuthStore from '../store/authStore'
 import useUserProfileStore from '../store/userProfileStore'
 
 const useFollowUser = (userId) => {
-  console.log(userId)
   const [isUpdating, setIsUpdating] = useState(false)
   const [isFollowing, setIsFollowing] = useState(false)
   const { user, setUser } = useAuthStore()

@@ -5,7 +5,7 @@ import { useRef } from 'react'
 import SuggestedUser from '../SuggestedUsers/SuggestedUser'
 
 const Search = () => {
-  const { isLoading, user, getUserProfile, setUser } = useSearchUser()
+  const { isLoading, users, getUserProfile, setUsers } = useSearchUser()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const searchRef = useRef(null)
 
@@ -14,7 +14,14 @@ const Search = () => {
     getUserProfile(searchRef.current.value)
   }
 
-  console.log(user)
+  const handleClose = () => {
+    onClose()
+    setUsers([])
+    searchRef.current.value = ''
+  }
+
+  console.log('users.length', users.length)
+  console.log('users', { ...users })
 
   return (
     <>
@@ -43,7 +50,7 @@ const Search = () => {
       </Flex>
     </Tooltip>
 
-    <Modal isOpen={isOpen} onClose={onClose} motionPreset='slideInLeft'>
+    <Modal isOpen={isOpen} onClose={handleClose} motionPreset='slideInLeft'>
         <ModalOverlay />
         <ModalContent bg={'black'} border={'1px solid gray'} maxW={'400px'}>
           <ModalHeader>Search User</ModalHeader>
@@ -61,7 +68,14 @@ const Search = () => {
                 </Button>
               </Flex>
             </form>
-            {user && <SuggestedUser user={user} setUser={setUser} />}
+            {users.length > 0 && !isLoading && (
+              <>
+                {
+                  users.map(user => <SuggestedUser key={user.uid} user={user} setUsers={setUsers} />)
+
+                }
+              </>
+            )}
           </ModalBody>
         </ModalContent>
       </Modal>

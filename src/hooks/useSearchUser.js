@@ -5,20 +5,28 @@ import { firestore } from '../firebase/firebase'
 
 const useSearchUser = () => {
   const [isLoading, setIsLoading] = useState(false)
-  const [user, setUser] = useState(null)
+  const [users, setUsers] = useState([])
   const showToast = useShowToast()
 
   const getUserProfile = async (username) => {
     setIsLoading(true)
-    setUser(null)
+    setUsers([])
     try {
-      const q = query(collection(firestore, 'users'), where('username', '==', username))
+      const q = query(collection(firestore, 'users'),
+        where('username', '>=', username),
+        where('username', '<', username + '\uf8ff'))
 
       const querySnapshot = await getDocs(q)
 
       if (querySnapshot.empty) return showToast('Error', 'User not found', 'error')
 
-      querySnapshot.forEach(doc => { setUser(doc.data()) })
+      const getUsers = []
+
+      querySnapshot.forEach(doc => {
+        getUsers.push({ ...doc.data() })
+      })
+
+      setUsers(getUsers)
     } catch (error) {
       showToast('Error', error.message, 'error')
     } finally {
@@ -26,7 +34,7 @@ const useSearchUser = () => {
     }
   }
 
-  return { isLoading, user, getUserProfile, setUser }
+  return { isLoading, users, getUserProfile, setUsers }
 }
 
 export default useSearchUser

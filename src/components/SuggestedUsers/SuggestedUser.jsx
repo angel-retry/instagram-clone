@@ -3,20 +3,29 @@ import useFollowUser from '../../hooks/useFollowUser'
 import useAuthStore from '../../store/authStore'
 import { Link } from 'react-router-dom'
 
-const SuggestedUser = ({ user, setUser }) => {
+const SuggestedUser = ({ user, setUsers }) => {
   const { isUpdating, isFollowing, handleFollowUser } = useFollowUser(user.uid)
   const authUser = useAuthStore(state => state.user)
 
   const onFollowUser = async () => {
     await handleFollowUser()
-    setUser({
-      ...user,
-      followers: isFollowing ? user.followers.filter(uid => uid !== authUser.uid) : [...user.followers, authUser.uid]
+    setUsers(prevUsers => {
+      const updatedUsers = prevUsers.map(prevUser => {
+        if (prevUser.uid === user.uid) {
+          return {
+            ...prevUser,
+            followers: isFollowing ? prevUser.followers.filter(uid => uid !== authUser.uid) : [...prevUser.followers, authUser.uid]
+          }
+        }
+        return prevUser
+      })
+      console.log('updatedUsers', { ...updatedUsers })
+      return updatedUsers
     })
   }
 
   return (
-    <Flex justifyContent={'space-between'} alignItems={'center'} w={'full'}>
+    <Flex justifyContent={'space-between'} alignItems={'center'} w={'full'} mb={3}>
       <Flex alignItems={'center'} gap={4}>
         <Link to={`/${user.username}`}>
           <Avatar name={user.username} src={user.profilePicURL} alt={user.username} size={'md'} />
