@@ -4,8 +4,11 @@ import useAuthStore from '../../store/authStore'
 import EditProfile from './EditProfile'
 import useFollowUser from '../../hooks/useFollowUser'
 import ProfileFollowModal from './ProfileFollowModal'
+import { useState } from 'react'
 
 const ProfileHeader = () => {
+  const [followModal, setFollowModal] = useState(null)
+  console.log('followModal', followModal)
   const { userProfile } = useUserProfileStore()
   const authUser = useAuthStore(state => state.user)
 
@@ -63,21 +66,27 @@ const ProfileHeader = () => {
             Posts
           </Text>
 
-          <Text fontSize={{ base: 'xs', md: 'sm' }} onClick={onOpenFollowModal} cursor={'pointer'} >
+          <Text fontSize={{ base: 'xs', md: 'sm' }} onClick={() => {
+            setFollowModal('followers')
+            onOpenFollowModal()
+          }} cursor={'pointer'} >
             <Text as={'span'} fontWeight={'bold'} mr={1}>
               {userProfile.followers.length}
             </Text>
             Followers
           </Text>
 
-          <ProfileFollowModal isOpen={isOpenFollowModal} onClose={onCloseFollowModal }/>
-
-          <Text fontSize={{ base: 'xs', md: 'sm' }}>
+          <Text fontSize={{ base: 'xs', md: 'sm' }} onClick={() => {
+            setFollowModal('following')
+            onOpenFollowModal()
+          }} cursor={'pointer'}>
             <Text as={'span'} fontWeight={'bold'} mr={1}>
               {userProfile.following.length}
             </Text>
             Following
           </Text>
+
+          <ProfileFollowModal isOpen={isOpenFollowModal} onClose={onCloseFollowModal} followModal={followModal} />
         </Flex>
 
         <Flex alignSelf={{ base: 'center', sm: 'flex-start' }}>
