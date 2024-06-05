@@ -79,6 +79,8 @@ npm run dev
 email: user1@example.com
 password: 123456
 ```
+## 感謝
+特別感謝 [這個YouTube影片](https://www.youtube.com/watch?v=RMScMwY2B6Q) 提供的幫助。
 ## Development tool - 開發工具
 - `@chakra-ui/icons`: ^2.1.1
 - `@chakra-ui/react`: ^2.8.2
