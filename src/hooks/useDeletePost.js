@@ -2,7 +2,7 @@ import { useState } from 'react'
 import useShowToast from './useShowToast'
 import { deleteObject, ref } from 'firebase/storage'
 import { firestore, storage } from '../firebase/firebase'
-import { arrayRemove, deleteDoc, doc, updateDoc } from 'firebase/firestore'
+import { arrayRemove, collection, deleteDoc, doc, getDocs, query, updateDoc, where } from 'firebase/firestore'
 import useAuthStore from '../store/authStore'
 import usePostStore from '../store/postStore'
 import useUserProfileStore from '../store/userProfileStore'
@@ -32,6 +32,14 @@ const useDeletePost = (postId) => {
       // 更新使用者post資訊
       await updateDoc(userRef, {
         posts: arrayRemove(postId)
+      })
+
+      // 刪除通知
+      const q = query(collection(firestore, 'notifications'), where('postId', '==', postId))
+
+      const querySnapShot = await getDocs(q)
+      querySnapShot.forEach(async (doc) => {
+        await deleteDoc(doc.ref)
       })
 
       deletePost(postId)
