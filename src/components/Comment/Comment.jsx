@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { timeAgo } from '../../utils/timeAgo'
 
 const Comment = ({ comment }) => {
-  const { isLoading, userProfile, setUserProfile } = useGetUserProfileById(comment.createdBy)
+  const { isLoading, userProfile } = useGetUserProfileById(comment.createdBy)
 
   if (isLoading) return <CommentSkeleton />
   return (

@@ -18,6 +18,8 @@ const useGetUserProfileById = (userId) => {
         if (userRef.exists()) {
           setUserProfile(userRef.data())
         }
+
+        console.log(userRef.data())
       } catch (error) {
         showToast('Error', error.message, 'error')
       } finally {

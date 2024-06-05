@@ -3,28 +3,31 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
-  ModalCloseButton,
-  Button
+  ModalCloseButton
 } from '@chakra-ui/react'
 
+import useUserProfileStore from '../../store/userProfileStore'
+import Follow from '../Follow/Follow'
+
 const ProfileFollowModal = ({ isOpen, onClose }) => {
+  const profileUser = useUserProfileStore(state => state.userProfile)
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+        <ModalContent bg={'black'} border={'1px solid gray'} maxW={'400px'}>
+          <ModalHeader>Followers</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
+            {
+              profileUser.followers.length > 0 && (
+                profileUser.followers.map(follower => (
+                  <Follow key={follower} userId={follower}/>
+                ))
+              )
+            }
           </ModalBody>
-
-          <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button variant='ghost'>Secondary Action</Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
   )
