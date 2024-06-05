@@ -5,7 +5,8 @@ import useUserProfileStore from '../store/userProfileStore'
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import { firestore } from '../firebase/firebase'
 
-const useGetUserPosts = () => {
+const useGetUserPosts = (type) => {
+  console.log(type)
   const [isLoading, setIsLoading] = useState(true)
   const { posts, setPosts } = usePostStore()
   const showToast = useShowToast()
@@ -17,9 +18,19 @@ const useGetUserPosts = () => {
       setIsLoading(true)
       setPosts([])
 
-      try {
-        const q = query(collection(firestore, 'posts'), where('createdBy', '==', userProfile.uid))
+      let q
 
+      switch (type) {
+        case 'profile':
+          q = query(collection(firestore, 'posts'), where('createdBy', '==', userProfile.uid))
+          break
+        default:
+          showToast('Error', 'Invalid type specified', 'error')
+          setIsLoading(false)
+          return
+      }
+
+      try {
         const querySnapshot = await getDocs(q)
 
         const posts = []
@@ -39,7 +50,7 @@ const useGetUserPosts = () => {
     }
 
     getPosts()
-  }, [setPosts, userProfile, showToast])
+  }, [setPosts, userProfile, showToast, type])
 
   return { isLoading, posts }
 }

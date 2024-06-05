@@ -1,9 +1,10 @@
-import { Container, Flex, Link, Skeleton, SkeletonCircle, Text, VStack } from '@chakra-ui/react'
+import { Box, Container, Flex, Link, Skeleton, SkeletonCircle, Tab, TabIndicator, TabPanel, TabPanels, Tabs, Text, VStack } from '@chakra-ui/react'
 import ProfileHeader from '../../components/Profile/ProfileHeader'
-import ProfileTab from '../../components/Profile/ProfileTab'
-import ProfilePosts from '../../components/Profile/ProfilePosts'
+import ProfileTabList from '../../components/Profile/ProfileTabList'
 import useGetUserProfileByUsername from '../../hooks/useGetUserProfileByUsername'
 import { useParams, Link as RouterLink } from 'react-router-dom'
+import ProfilePosts from '../../components/Profile/ProfilePosts'
+import { createContext } from 'react'
 
 const ProfilePage = () => {
   const { username } = useParams()
@@ -12,6 +13,8 @@ const ProfilePage = () => {
   const userNotFound = !isLoading && !userProfile
 
   if (userNotFound) return <UserNotFound/>
+
+  const TabContext = createContext()
 
   return (
     <Container maxW={'container.lg'} py={5}>
@@ -36,8 +39,23 @@ const ProfilePage = () => {
         borderColor={'whiteAlpha.300'}
         direction={'column'}
       >
-        <ProfileTab />
-        <ProfilePosts />
+        <Tabs variant='unstyled' display={'flex'} alignItems={'center'} flexDir={'column'}>
+        <Flex position="relative" >
+          <ProfileTabList />
+          <TabIndicator height='1px' bg='white' borderRadius='1px' position="absolute" top="0" left="0" />
+        </Flex>
+        <TabPanels>
+          <TabPanel>
+            <ProfilePosts type='profile' />
+          </TabPanel>
+          <TabPanel>
+           <ProfilePosts type='saved' />
+          </TabPanel>
+          <TabPanel>
+           <ProfilePosts type='liked' />
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
       </Flex>
     </Container>
   )
