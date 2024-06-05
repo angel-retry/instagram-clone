@@ -29,8 +29,8 @@ const ProfileTab = () => {
               </Flex>
             </Tab>
 
-            <Tab color={'gray'} _selected={{ color: 'white' }} onClick={() => setSelectedTab('saved') }>
-              <Flex alignItems={'center'} p={3} gap={2} cursor={'pointer'} textTransform={'uppercase'} fontWeight={'bold'}>
+            <Tab color={'gray'} _selected={{ color: 'white' }} onClick={() => setSelectedTab('saved') } isDisabled>
+              <Flex alignItems={'center'} p={3} gap={2} textTransform={'uppercase'} fontWeight={'bold'}>
                 <Box fontSize={20}>
                   <BsBookmark />
                 </Box>

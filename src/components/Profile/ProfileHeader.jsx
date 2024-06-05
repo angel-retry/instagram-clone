@@ -3,12 +3,14 @@ import useUserProfileStore from '../../store/userProfileStore'
 import useAuthStore from '../../store/authStore'
 import EditProfile from './EditProfile'
 import useFollowUser from '../../hooks/useFollowUser'
+import ProfileFollowModal from './ProfileFollowModal'
 
 const ProfileHeader = () => {
   const { userProfile } = useUserProfileStore()
   const authUser = useAuthStore(state => state.user)
 
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen: isOpenEditProfile, onOpen: onOpenEditProfile, onClose: onCloseEditProfile } = useDisclosure()
+  const { isOpen: isOpenFollowModal, onOpen: onOpenFollowModal, onClose: onCloseFollowModal } = useDisclosure()
 
   const { isUpdating, isFollowing, handleFollowUser } = useFollowUser(userProfile.uid)
 
@@ -35,7 +37,7 @@ const ProfileHeader = () => {
 
           {visitingOwnProfileAndAuth && (
             <Flex gap={4} alignItems={'center'} justifyContent={'center'}>
-              <Button bg={'white'} color={'black'} _hover={{ bg: 'whiteAlpha.800' }} size={{ base: 'xs', md: 'sm' }} onClick={onOpen}>
+              <Button bg={'white'} color={'black'} _hover={{ bg: 'whiteAlpha.800' }} size={{ base: 'xs', md: 'sm' }} onClick={onOpenEditProfile}>
                 Edit Profile
               </Button>
             </Flex>
@@ -54,19 +56,21 @@ const ProfileHeader = () => {
         </Flex>
 
         <Flex gap={{ base: 2, sm: 4 }} alignItems={'center'}>
-          <Text fontSize={{ base: 'xs', md: 'sm' }}>
+          <Text fontSize={{ base: 'xs', md: 'sm' }} >
             <Text as={'span'} fontWeight={'bold'} mr={1}>
               {userProfile.posts.length}
             </Text>
             Posts
           </Text>
 
-          <Text fontSize={{ base: 'xs', md: 'sm' }}>
+          <Text fontSize={{ base: 'xs', md: 'sm' }} onClick={onOpenFollowModal} cursor={'pointer'} >
             <Text as={'span'} fontWeight={'bold'} mr={1}>
               {userProfile.followers.length}
             </Text>
             Followers
           </Text>
+
+          <ProfileFollowModal isOpen={isOpenFollowModal} onClose={onCloseFollowModal }/>
 
           <Text fontSize={{ base: 'xs', md: 'sm' }}>
             <Text as={'span'} fontWeight={'bold'} mr={1}>
@@ -83,7 +87,7 @@ const ProfileHeader = () => {
         <Text fontSize={'sm'} alignSelf={{ base: 'center', sm: 'flex-start' }}>{userProfile.bio}</Text>
       </VStack>
 
-      {isOpen && <EditProfile isOpen={isOpen} onClose={onClose}/>}
+      {isOpenEditProfile && <EditProfile isOpen={isOpenEditProfile} onClose={onCloseEditProfile}/>}
     </Flex>
   )
 }
