@@ -1,6 +1,6 @@
 import * as yup from 'yup'
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
-import { Alert, AlertIcon, Button, Flex, FormControl, FormErrorMessage, Input, InputGroup, InputRightElement } from '@chakra-ui/react'
+import { Alert, AlertIcon, Button, Flex, FormControl, FormErrorMessage, Input, InputGroup, InputRightElement, Tooltip } from '@chakra-ui/react'
 import { useState } from 'react'
 import useSignUpWithEmailAndPassword from '../../hooks/useSignUpWithEmailAndPassword'
 import useShowToast from '../../hooks/useShowToast'
@@ -34,13 +34,16 @@ const Signup = () => {
 
   const showToast = useShowToast()
 
-  const onSubmit = (data) => {
-    console.log({ data })
+  const onSubmit = async (data) => {
+    try {
+      await signup(data)
+    } catch (error) {
+      return showToast('Error', error.message, 'error')
+    }
   }
 
   const onError = (error) => {
     if (!error) return
-    console.log(error)
     showToast('Error', 'Please enter these fields', 'error')
   }
 
@@ -96,22 +99,24 @@ const Signup = () => {
         isRequired
         isInvalid={ errors.password }
       >
-        <InputGroup>
-          <Input
-            placeholder='Password'
-            fontSize={14}
-            type={showPassword ? 'text' : 'password'}
-            {...register('password')}
-            name='password'
-            size={'sm'}
-          />
+        <Tooltip label={PasswordHover} placement='bottom' hasArrow padding={3} >
+          <InputGroup>
+            <Input
+              placeholder='Password'
+              fontSize={14}
+              type={showPassword ? 'text' : 'password'}
+              {...register('password')}
+              name='password'
+              size={'sm'}
+            />
 
-          <InputRightElement h={'full'}>
-            <Button variant={'ghost'} size={'sm'} onClick={() => setShowPassword(!showPassword)}>
-              {showPassword ? <ViewIcon/> : <ViewOffIcon/>}
-            </Button>
-          </InputRightElement>
-        </InputGroup>
+            <InputRightElement h={'full'}>
+              <Button variant={'ghost'} size={'sm'} onClick={() => setShowPassword(!showPassword)}>
+                {showPassword ? <ViewIcon/> : <ViewOffIcon/>}
+              </Button>
+            </InputRightElement>
+          </InputGroup>
+        </Tooltip>
 
         <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
       </FormControl>
@@ -156,3 +161,11 @@ const Signup = () => {
 }
 
 export default Signup
+
+const PasswordHover = (
+  <>
+    Between 8 to 16 characters<br/>
+    At least one lowercase letter<br/>
+    At least one uppercase letter
+  </>
+)
