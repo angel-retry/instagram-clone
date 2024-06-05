@@ -24,6 +24,9 @@ const useGetUserPosts = (type) => {
         case 'profile':
           q = query(collection(firestore, 'posts'), where('createdBy', '==', userProfile.uid))
           break
+        case 'liked':
+          q = query(collection(firestore, 'posts'), where('likes', 'array-contains', userProfile.uid))
+          break
         default:
           showToast('Error', 'Invalid type specified', 'error')
           setIsLoading(false)
@@ -32,6 +35,12 @@ const useGetUserPosts = (type) => {
 
       try {
         const querySnapshot = await getDocs(q)
+
+        if (querySnapshot.empty) {
+          setPosts([])
+          setIsLoading(false)
+          return
+        }
 
         const posts = []
         querySnapshot.forEach(doc => {
