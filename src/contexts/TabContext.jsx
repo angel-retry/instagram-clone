@@ -2,12 +2,12 @@ import { createContext, useState } from 'react'
 
 const TabContext = createContext()
 
-const TabProvider = ({ chidren }) => {
+const TabProvider = ({ children }) => {
   const [selectedTab, setSelectedTab] = useState('profile')
 
   return (
     <TabContext.Provider value={{ selectedTab, setSelectedTab }}>
-      {chidren}
+      {children}
     </TabContext.Provider>
   )
 }

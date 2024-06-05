@@ -1,9 +1,12 @@
 import { Box, Flex, Grid, Skeleton, Text, VStack } from '@chakra-ui/react'
 import ProfilePost from './ProfilePost'
 import useGetUserPosts from '../../hooks/useGetUserPosts'
+import { useContext } from 'react'
+import { TabContext } from '../../contexts/TabContext'
 
-const ProfilePosts = ({ type }) => {
-  const { isLoading, posts } = useGetUserPosts(type)
+const ProfilePosts = () => {
+  const { selectedTab } = useContext(TabContext)
+  const { isLoading, posts } = useGetUserPosts(selectedTab)
 
   const noPostsFound = !isLoading && posts.length === 0
 
