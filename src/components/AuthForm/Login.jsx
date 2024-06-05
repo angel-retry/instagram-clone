@@ -23,7 +23,7 @@ const Login = () => {
   const onSumbit = async (data) => {
     try {
       await login(data)
-    } catch (err) {
+    } catch (error) {
       return showToast('Error', error.message, 'error')
     }
   }

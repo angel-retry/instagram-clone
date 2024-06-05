@@ -3,14 +3,19 @@ import { SearchLogo } from '../../assets/constants'
 import useSearchUser from '../../hooks/useSearchUser'
 import { useRef } from 'react'
 import SuggestedUser from '../SuggestedUsers/SuggestedUser'
+import useShowToast from '../../hooks/useShowToast'
 
 const Search = () => {
   const { isLoading, users, getUserProfile, setUsers } = useSearchUser()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const searchRef = useRef(null)
+  const showToast = useShowToast()
 
   const handleSeachUser = async (e) => {
     e.preventDefault()
+    if (!searchRef.current.value) {
+      return showToast('Error', 'Please enter username', 'error')
+    }
     getUserProfile(searchRef.current.value)
   }
 
