@@ -3,6 +3,11 @@
 
 ## 專案連結
 [https://clone-instagram-by-enju.vercel.app/](https://clone-instagram-by-enju.vercel.app/)
+可以透過以下帳號登入
+```
+email: user1@example.com
+password: 123456
+```
 
 ## Features - 產品功能
 ### 註冊/登入/登出
