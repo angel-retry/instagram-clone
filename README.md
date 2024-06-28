@@ -86,6 +86,10 @@ password: 123456
 ```
 ## 感謝
 特別感謝 [這個YouTube影片](https://www.youtube.com/watch?v=RMScMwY2B6Q) 提供的幫助。
+自己有追加以下功能:
+- 通知有人按讚、留言你的貼文
+- 個人頁面可以看使用者按讚的貼文
+- 登入\註冊表單驗證
 ## Development tool - 開發工具
 - `@chakra-ui/icons`: ^2.1.1
 - `@chakra-ui/react`: ^2.8.2
